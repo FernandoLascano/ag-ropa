@@ -448,8 +448,6 @@
             <div class="catalog-item-code">${p.code}</div>
             <div class="catalog-item-name">${esc(p.name)}</div>
             <div class="catalog-item-price">${p.currency === 'ARS' ? '$' : 'US$'}${esc(p.price)}</div>
-            ${p.description ? `<div class="catalog-item-desc">${esc(p.description)}</div>` : ''}
-            ${detailsHtml ? `<ul class="catalog-item-details">${detailsHtml}</ul>` : ''}
             <div class="catalog-item-sizes">${sizesHtml}</div>
             <div class="catalog-item-cta">Consultar &mdash; ${p.code}</div>
           </div>
