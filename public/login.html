@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AG - Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .login-logo {
+      max-width: 200px;
+      margin-bottom: 32px;
+    }
+    .login-box {
+      background: var(--bg-card);
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 360px;
+      box-shadow: var(--shadow-md);
+    }
+    .login-box h2 {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 24px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    .login-box .form-group {
+      margin-bottom: 16px;
+    }
+    .login-box label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--text);
+      transition: border-color var(--transition);
+    }
+    .login-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--transition);
+      margin-top: 8px;
+    }
+    .login-btn:hover { background: var(--accent-hover); }
+    .login-error {
+      color: var(--danger);
+      font-size: 13px;
+      text-align: center;
+      margin-top: 12px;
+      display: none;
+    }
+    .login-error.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img class="login-logo" src="/logo-ag.jpeg" alt="AG">
+    <div class="login-box">
+      <h2>Panel Admin</h2>
+      <form id="login-form">
+        <div class="form-group">
+          <label>Usuario</label>
+          <input type="text" id="username" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label>Contrasena</label>
+          <input type="password" id="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="login-btn">Ingresar</button>
+        <div class="login-error" id="login-error">Usuario o contrasena incorrectos</div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      document.getElementById('login-error').classList.remove('visible');
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          })
+        });
+
+        if (res.ok) {
+          window.location.href = '/admin';
+        } else {
+          document.getElementById('login-error').classList.add('visible');
+        }
+      } catch (err) {
+        document.getElementById('login-error').classList.add('visible');
+      }
+    });
+  </script>
+</body>
+</html>

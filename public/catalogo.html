@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AG - Catalogo</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/catalogo.css">
+  <style>
+    /* ============================================
+       LIGHTBOX
+       ============================================ */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48dGV4dCB4PSIxMDAiIHk9IjExMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMyIiBmaWxsPSIjMkIzQTY3IiBmaWxsLW9wYWNpdHk9IjAuMDUiIHRyYW5zZm9ybT0icm90YXRlKC0zMCAxMDAgMTAwKSI+QUc8L3RleHQ+PC9zdmc+Cg==") repeat, rgba(245,244,241,0.98);
+      z-index: 1000;
+      flex-direction: column;
+    }
+    .lightbox-overlay.active { display: flex; }
+
+    .lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      color: var(--text-light);
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      flex-shrink: 0;
+    }
+    .lightbox-header .lb-code {
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 2px;
+    }
+    .lightbox-header .lb-name {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      color: var(--text);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+    .lightbox-close {
+      background: none; border: none; color: var(--text); font-size: 30px;
+      cursor: pointer; padding: 0; line-height: 1; opacity: 0.4;
+      transition: opacity var(--transition);
+      font-weight: 400;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    .lightbox-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    #lb-media-container {
+      max-height: 60vh;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    }
+
+    .lightbox-media {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .lightbox-media.is-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 22px;
+      width: 44px; height: 44px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+      opacity: 0.5;
+    }
+    .lightbox-nav:hover { opacity: 1; border-color: var(--accent); }
+    .lightbox-nav.prev { left: 16px; }
+    .lightbox-nav.next { right: 16px; }
+
+    .lightbox-thumbs {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+      padding: 16px;
+      flex-shrink: 0;
+      overflow-x: auto;
+    }
+    .lightbox-thumb {
+      width: 52px; height: 66px;
+      flex-shrink: 0;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.35;
+      transition: all var(--transition);
+      position: relative;
+    }
+    .lightbox-thumb::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: transparent;
+      transition: background var(--transition);
+    }
+    .lightbox-thumb.active {
+      opacity: 1;
+    }
+    .lightbox-thumb.active::after {
+      background: var(--accent);
+    }
+    .lightbox-thumb:hover { opacity: 0.7; }
+    .lightbox-thumb img,
+    .lightbox-thumb video {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    .lightbox-info {
+      text-align: center;
+      padding: 0 28px 24px;
+      flex-shrink: 0;
+    }
+    .lightbox-info .lb-price {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .lightbox-info .lb-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .lightbox-info .lb-details {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .lightbox-info .lb-sizes {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+    .lightbox-info .lb-size {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-light);
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.3px;
+      border-bottom: 1px solid transparent;
+    }
+    .lightbox-info .lb-size.available {
+      color: var(--text);
+      border-bottom-color: var(--text);
+    }
+    .lightbox-info .lb-cta {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 14px 36px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all var(--transition);
+    }
+    .lightbox-info .lb-cta:hover { background: #1da851; transform: translateY(-1px); }
+
+    /* Media count badge */
+    .catalog-item-image .media-count {
+      position: absolute;
+      bottom: 12px; right: 12px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      color: white;
+      font-size: 11px;
+      padding: 5px 10px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Video play icon */
+    .catalog-item-image .video-play-icon {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      color: white;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      pointer-events: none;
+      opacity: 0.7;
+      transition: all var(--transition);
+    }
+    .catalog-item:hover .video-play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+
+    /* CATEGORY NAV */
+    .catalog-cat-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 32px 40px 0;
+    }
+    .catalog-cat-btn {
+      padding: 12px 24px;
+      font-size: 13px;
+      font-family: var(--font-sans);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .catalog-cat-btn:hover { color: var(--text); }
+    .catalog-cat-btn.active {
+      color: var(--text);
+      border-bottom-color: var(--text);
+    }
+
+    /* CATEGORY SECTIONS */
+    .catalog-section {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .catalog-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 56px 0 28px;
+      position: relative;
+    }
+    .catalog-section-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .catalog-section-title {
+      font-family: var(--font-serif);
+      font-size: 30px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .catalog-section-count {
+      font-size: 13px;
+      color: var(--text-light);
+      letter-spacing: 1.5px;
+    }
+    .catalog-section-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      padding: 36px 0 20px;
+    }
+
+    @media (min-width: 1200px) {
+      .catalog-section-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .catalog-section-grid { grid-template-columns: 1fr; gap: 28px; }
+      .catalog-section { padding: 0 20px; }
+      .catalog-section-header { padding: 36px 0 20px; }
+      .catalog-section-title { font-size: 24px; letter-spacing: 1.5px; }
+      .catalog-cat-nav { padding: 24px 20px 0; gap: 0; flex-wrap: wrap; justify-content: flex-start; }
+      .catalog-cat-btn { padding: 10px 16px; font-size: 12px; }
+      .lightbox-nav { width: 36px; height: 36px; font-size: 18px; }
+      .lightbox-thumb { width: 42px; height: 54px; }
+      .lightbox-info .lb-price { font-size: 22px; }
+      #lb-media-container { max-height: 45vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="catalog">
+    <header class="catalog-header">
+      <a href="/" class="catalog-brand">
+        <span class="catalog-brand-name"><span style="color:#5A6A9A">A</span><span style="color:#D44A5A">G</span></span>
+        <span class="catalog-brand-sub">Ropa Importada</span>
+      </a>
+      <div class="catalog-gender-tabs">
+        <a href="/catalogo/mujer" id="tab-mujer">Mujer</a>
+        <a href="/catalogo/hombre" id="tab-hombre">Hombre</a>
+      </div>
+    </header>
+
+    <div class="catalog-hero">
+      <div class="catalog-hero-label">Catalogo</div>
+      <h1 class="catalog-hero-title" id="hero-title">Productos</h1>
+      <div class="catalog-hero-count" id="hero-count"></div>
+    </div>
+
+    <div class="catalog-cat-nav" id="cat-nav"></div>
+
+    <div id="catalog-sections"></div>
+
+    <div class="catalog-footer">
+      <p><a href="https://wa.me/5493515632163" style="color:inherit;text-decoration:none;">WhatsApp 351-563-2163</a> &bull; <a href="https://instagram.com/ropaimportada.ag" target="_blank" style="color:inherit;text-decoration:none;">@ropaimportada.ag</a> &bull; Envios a todo el pais</p>
+      <p style="margin-top:10px"><a href="/">Volver al inicio</a> &bull; Precios validos al momento de la consulta</p>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-header">
+      <div>
+        <span class="lb-code" id="lb-code"></span>
+        <span class="lb-name" id="lb-name" style="margin-left:14px;"></span>
+      </div>
+      <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    </div>
+    <div class="lightbox-main" id="lb-main">
+      <button class="lightbox-nav prev" onclick="lbNav(-1)">&#8249;</button>
+      <div id="lb-media-container"></div>
+      <button class="lightbox-nav next" onclick="lbNav(1)">&#8250;</button>
+    </div>
+    <div class="lightbox-thumbs" id="lb-thumbs"></div>
+    <div class="lightbox-info" id="lb-info"></div>
+  </div>
+
+  <a href="https://wa.me/5493515632163" class="whatsapp-float" title="WhatsApp">&#128172;</a>
+
+  <script>
+    const urlPath = window.location.pathname;
+    let gender = null;
+    if (urlPath.includes('/mujer')) gender = 'mujer';
+    else if (urlPath.includes('/hombre')) gender = 'hombre';
+
+    if (gender === 'mujer') {
+      document.getElementById('tab-mujer').classList.add('active');
+      document.getElementById('hero-title').textContent = 'Mujer';
+      document.title = 'AG - Catalogo Mujer';
+    } else if (gender === 'hombre') {
+      document.getElementById('tab-hombre').classList.add('active');
+      document.getElementById('hero-title').textContent = 'Hombre';
+      document.title = 'AG - Catalogo Hombre';
+    }
+
+    let catalogProducts = [];
+    let activeCategory = 'all';
+
+    const CATEGORIES = [
+      { key: 'deportivo', label: 'Deportivo' },
+      { key: 'remeras-camisas', label: 'Remeras / Camisas' },
+      { key: 'abrigos', label: 'Abrigos' },
+      { key: 'pantalones', label: 'Pantalones' },
+      { key: 'ropa-interior', label: 'Ropa Interior' },
+      { key: 'accesorio', label: 'Accesorios' }
+    ];
+
+    function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+    function tagLabel(t) { return {nuevo:'Nuevo',oferta:'Oferta',ultimos:'Ultimos talles'}[t] || ''; }
+    function tagColor(t) { return {nuevo:'#2B3A67',oferta:'#B22234',ultimos:'#5A6A9A'}[t] || '#666'; }
+    function catLabel(c) { return CATEGORIES.find(x => x.key === c)?.label || 'Otros'; }
+
+    function getCover(p) {
+      if (!p.media || p.media.length === 0) return null;
+      return p.media.find(m => m.isCover) || p.media[0];
+    }
+
+    function renderProductCard(p, delay) {
+      const globalIdx = catalogProducts.indexOf(p);
+      const cover = getCover(p);
+      const mediaCount = (p.media || []).length;
+      const hasVideo = (p.media || []).some(m => m.type === 'video');
+
+      const sizesHtml = ['S','M','L','XL','XXL'].map(s =>
+        `<span class="catalog-size ${p.sizes && p.sizes[s] ? 'available' : ''}">${s}</span>`
+      ).join('');
+
+      const detailsHtml = [
+        p.material ? `<li>Material: ${esc(p.material)}</li>` : '',
+        p.color ? `<li>Color: ${esc(p.color)}</li>` : '',
+        p.fit ? `<li>Fit: ${esc(p.fit)}</li>` : ''
+      ].filter(Boolean).join('');
+
+      let coverHtml = '';
+      if (cover) {
+        if (cover.type === 'video') {
+          coverHtml = `<video src="${cover.path}" autoplay muted loop playsinline preload="metadata"></video><span class="video-play-icon">&#9654;</span>`;
+        } else {
+          coverHtml = `<img src="${cover.path}" alt="${esc(p.name)}" loading="lazy">`;
+        }
+      } else {
+        coverHtml = `<div class="no-img">${p.code}</div>`;
+      }
+
+      let countBadge = '';
+      if (mediaCount > 1) {
+        const label = hasVideo ? `${mediaCount} archivos` : `${mediaCount} fotos`;
+        countBadge = `<span class="media-count">${label}</span>`;
+      }
+
+      return `
+        <div class="catalog-item" onclick="openLightbox(${globalIdx})" style="animation-delay:${delay * 0.06}s">
+          <div class="catalog-item-image">
+            ${coverHtml}
+            ${p.tag ? `<span class="catalog-item-tag" style="background:${tagColor(p.tag)}">${tagLabel(p.tag)}</span>` : ''}
+            ${countBadge}
+          </div>
+          <div class="catalog-item-body">
+            <div class="catalog-item-code">${p.code}</div>
+            <div class="catalog-item-name">${esc(p.name)}</div>
+            <div class="catalog-item-price">$${esc(p.price)}</div>
+            ${p.description ? `<div class="catalog-item-desc">${esc(p.description)}</div>` : ''}
+            ${detailsHtml ? `<ul class="catalog-item-details">${detailsHtml}</ul>` : ''}
+            <div class="catalog-item-sizes">${sizesHtml}</div>
+            <div class="catalog-item-cta">Consultar &mdash; ${p.code}</div>
+          </div>
+        </div>`;
+    }
+
+    function renderCategoryNav() {
+      const nav = document.getElementById('cat-nav');
+      const counts = {};
+      CATEGORIES.forEach(c => { counts[c.key] = catalogProducts.filter(p => p.category === c.key).length; });
+
+      let html = `<button class="catalog-cat-btn ${activeCategory === 'all' ? 'active' : ''}" onclick="filterCategory('all')">Todo ${catalogProducts.length}</button>`;
+      CATEGORIES.forEach(c => {
+        if (counts[c.key] > 0) {
+          html += `<button class="catalog-cat-btn ${activeCategory === c.key ? 'active' : ''}" onclick="filterCategory('${c.key}')">${c.label} ${counts[c.key]}</button>`;
+        }
+      });
+      nav.innerHTML = html;
+    }
+
+    function filterCategory(cat) {
+      activeCategory = cat;
+      renderSections();
+      renderCategoryNav();
+    }
+
+    function renderSections() {
+      const container = document.getElementById('catalog-sections');
+
+      if (catalogProducts.length === 0) {
+        container.innerHTML = `
+          <div class="catalog-section">
+            <div style="text-align:center;padding:80px 20px;color:var(--text-light);">
+              <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:300;margin-bottom:8px;color:var(--text-secondary);">No hay productos disponibles</h3>
+              <p style="font-size:12px;letter-spacing:1px;">Pronto vamos a cargar nuevas prendas.</p>
+            </div>
+          </div>`;
+        return;
+      }
+
+      if (activeCategory !== 'all') {
+        const filtered = catalogProducts.filter(p => p.category === activeCategory);
+        const label = catLabel(activeCategory);
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<div class="catalog-section"><div style="text-align:center;padding:60px;color:var(--text-light);font-size:12px;letter-spacing:1px;">No hay productos en esta categoria.</div></div>`;
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="catalog-section">
+            <div class="catalog-section-header">
+              <h2 class="catalog-section-title">${label}</h2>
+              <span class="catalog-section-count">${filtered.length}</span>
+            </div>
+            <div class="catalog-section-grid">${filtered.map((p, i) => renderProductCard(p, i)).join('')}</div>
+          </div>`;
+        return;
+      }
+
+      let html = '';
+      let globalDelay = 0;
+
+      CATEGORIES.forEach(cat => {
+        const items = catalogProducts.filter(p => p.category === cat.key);
+        if (items.length === 0) return;
+        html += `
+          <div class="catalog-section" id="section-${cat.key}">
+            <div class="catalog-section-header">
+              <h2 class="catalog-section-title">${cat.label}</h2>
+              <span class="catalog-section-count">${items.length}</span>
+            </div>
+            <div class="catalog-section-grid">${items.map((p, i) => renderProductCard(p, globalDelay + i)).join('')}</div>
+          </div>`;
+        globalDelay += items.length;
+      });
+
+      container.innerHTML = html;
+    }
+
+    async function loadCatalog() {
+      const url = gender ? `/api/products?gender=${gender}` : '/api/products';
+      const res = await fetch(url);
+      catalogProducts = await res.json();
+
+      document.getElementById('hero-count').textContent =
+        `${catalogProducts.length} producto${catalogProducts.length !== 1 ? 's' : ''}`;
+
+      renderCategoryNav();
+      renderSections();
+    }
+
+    // === LIGHTBOX ===
+    let lbProduct = null;
+    let lbIndex = 0;
+
+    function openLightbox(productIdx) {
+      lbProduct = catalogProducts[productIdx];
+      if (!lbProduct || !lbProduct.media || lbProduct.media.length === 0) return;
+
+      lbIndex = lbProduct.media.findIndex(m => m.isCover);
+      if (lbIndex < 0) lbIndex = 0;
+
+      document.getElementById('lb-code').textContent = lbProduct.code;
+      document.getElementById('lb-name').textContent = lbProduct.name;
+
+      renderLbInfo();
+      renderLbThumbs();
+      renderLbMedia();
+
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+      const vid = document.querySelector('#lb-media-container video');
+      if (vid) vid.pause();
+    }
+
+    function lbNav(dir) {
+      if (!lbProduct) return;
+      lbIndex = (lbIndex + dir + lbProduct.media.length) % lbProduct.media.length;
+      renderLbMedia();
+      renderLbThumbs();
+    }
+
+    function lbGoTo(i) {
+      lbIndex = i;
+      renderLbMedia();
+      renderLbThumbs();
+    }
+
+    function renderLbMedia() {
+      const container = document.getElementById('lb-media-container');
+      const m = lbProduct.media[lbIndex];
+      if (m.type === 'video') {
+        container.innerHTML = `<video class="lightbox-media is-video" src="${m.path}" controls autoplay playsinline preload="metadata"></video>`;
+      } else {
+        container.innerHTML = `<img class="lightbox-media" src="${m.path}" alt="${esc(lbProduct.name)}">`;
+      }
+    }
+
+    function renderLbThumbs() {
+      const el = document.getElementById('lb-thumbs');
+      if (lbProduct.media.length <= 1) { el.innerHTML = ''; return; }
+
+      el.innerHTML = lbProduct.media.map((m, i) => {
+        const active = i === lbIndex ? 'active' : '';
+        if (m.type === 'video') {
+          return `<div class="lightbox-thumb ${active}" onclick="lbGoTo(${i})"><video src="${m.path}" muted preload="metadata"></video></div>`;
+        }
+        return `<div class="lightbox-thumb ${active}" onclick="lbGoTo(${i})"><img src="${m.path}" alt=""></div>`;
+      }).join('');
+    }
+
+    function renderLbInfo() {
+      const p = lbProduct;
+      const sizesHtml = ['S','M','L','XL','XXL'].map(s =>
+        `<span class="lb-size ${p.sizes && p.sizes[s] ? 'available' : ''}">${s}</span>`
+      ).join('');
+
+      const details = [
+        p.material ? `Material: ${esc(p.material)}` : '',
+        p.color ? `Color: ${esc(p.color)}` : '',
+        p.fit ? `Fit: ${esc(p.fit)}` : ''
+      ].filter(Boolean).map(d => `<span>${d}</span>`).join('');
+
+      document.getElementById('lb-info').innerHTML = `
+        <div class="lb-price">$${esc(p.price)}</div>
+        ${p.description ? `<div class="lb-desc">${esc(p.description)}</div>` : ''}
+        ${details ? `<div class="lb-details">${details}</div>` : ''}
+        <div class="lb-sizes">${sizesHtml}</div>
+        <a class="lb-cta" href="https://wa.me/5493515632163?text=Hola!%20Me%20interesa%20${encodeURIComponent(p.code + ' - ' + p.name)}" target="_blank">
+          Consultar por WhatsApp
+        </a>
+      `;
+    }
+
+    document.addEventListener('keydown', e => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lbNav(-1);
+      if (e.key === 'ArrowRight') lbNav(1);
+    });
+
+    document.getElementById('lb-main').addEventListener('click', function(e) {
+      if (e.target === this) closeLightbox();
+    });
+
+    loadCatalog();
+  </script>
+</body>
+</html>

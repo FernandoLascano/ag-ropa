@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AG - ROPA IMPORTADA | Catálogo — Noir Minimal</title>
+<style>
+  /* ============================================
+     AG - ROPA IMPORTADA — Catálogo Digital
+     Dirección Editorial A: "Noir Minimal"
+     Paleta: fondo oscuro + acento dorado cálido
+     ============================================ */
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg: #111111;
+    --bg-alt: #1A1A1A;
+    --bg-card: #161616;
+    --text: #F0EFED;
+    --text-secondary: #9A9A9A;
+    --text-light: #5A5A5A;
+    --accent: #C9A96E;
+    --accent-light: #D4BC8A;
+    --white: #FFFFFF;
+    --black: #000000;
+    --border: #2A2A2A;
+    --tag-new: #C9A96E;
+    --tag-sale: #C75050;
+    --tag-last: #8A7540;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: #000;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: var(--bg);
+    margin: 10mm auto;
+    padding: 15mm;
+    position: relative;
+    page-break-after: always;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.5);
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  .page-content {
+    width: 100%;
+    min-height: 267mm;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 10mm;
+    left: 15mm;
+    right: 15mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 6.5pt;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+    border-top: 0.5px solid var(--border);
+    padding-top: 3mm;
+  }
+
+  .page-number { font-weight: 500; color: var(--accent); }
+
+  /* PORTADA */
+  .cover {
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .cover-image {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.98) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cover-image-placeholder {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    width: 120mm; height: 150mm;
+    border: 1px dashed rgba(201,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8pt;
+    color: rgba(201,169,110,0.4);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .cover-content {
+    position: relative; z-index: 2;
+    padding: 20mm;
+  }
+
+  .cover-brand {
+    font-size: 36pt;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2mm;
+    line-height: 1;
+  }
+
+  .cover-sub {
+    font-size: 9pt;
+    font-weight: 300;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 12mm;
+  }
+
+  .cover-divider {
+    width: 50mm;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-bottom: 8mm;
+  }
+
+  .cover-title {
+    font-size: 14pt;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 3mm;
+  }
+
+  .cover-season {
+    font-size: 9pt;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+  }
+
+  /* CÓMO COMPRAR */
+  .how-to-buy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .section-title {
+    font-size: 20pt;
+    font-weight: 300;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 3mm;
+    color: var(--accent);
+  }
+
+  .section-subtitle {
+    font-size: 8.5pt;
+    color: var(--text-secondary);
+    margin-bottom: 15mm;
+    line-height: 1.6;
+    max-width: 130mm;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6mm;
+    margin-bottom: 15mm;
+  }
+
+  .step {
+    background: var(--bg-alt);
+    padding: 8mm;
+    border: 0.5px solid var(--border);
+  }
+
+  .step-number {
+    font-size: 28pt;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4mm;
+  }
+
+  .step-title {
+    font-size: 9pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2mm;
+    color: var(--text);
+  }
+
+  .step-desc {
+    font-size: 7.5pt;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .how-to-note {
+    font-size: 7pt;
+    color: var(--text-light);
+    border-left: 2px solid var(--accent);
+    padding-left: 4mm;
+    line-height: 1.6;
+  }
+
+  /* SEPARADOR */
+  .section-divider {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 267mm;
+  }
+
+  .section-divider-label {
+    font-size: 8pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 5mm;
+  }
+
+  .section-divider-title {
+    font-size: 32pt;
+    font-weight: 300;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5mm;
+  }
+
+  .section-divider-line {
+    width: 40mm;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  /* PRODUCTOS */
+  .products-page {
+    display: flex;
+    flex-direction: column;
+    gap: 8mm;
+    padding-bottom: 12mm;
+  }
+
+  .product-card {
+    display: grid;
+    grid-template-columns: 78mm 1fr;
+    gap: 6mm;
+    flex: 1;
+    min-height: 120mm;
+  }
+
+  .product-card:first-child {
+    padding-bottom: 8mm;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .product-image {
+    width: 78mm;
+    height: 97.5mm;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-image-placeholder {
+    font-size: 7pt;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .product-tag {
+    position: absolute;
+    top: 3mm; left: 3mm;
+    padding: 1.5mm 3mm;
+    font-size: 5.5pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--black);
+    border-radius: 0;
+  }
+
+  .tag-new { background: var(--tag-new); }
+  .tag-sale { background: var(--tag-sale); color: var(--white); }
+  .tag-last { background: var(--tag-last); color: var(--white); }
+
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 1mm;
+  }
+
+  .product-code {
+    font-size: 6.5pt;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 2mm;
+  }
+
+  .product-name {
+    font-size: 11pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 2mm;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .product-price {
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4mm;
+    letter-spacing: -0.3px;
+  }
+
+  .product-price .currency {
+    font-size: 9pt;
+    font-weight: 500;
+    vertical-align: super;
+    margin-right: 0.5mm;
+  }
+
+  .product-desc {
+    font-size: 7.5pt;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 4mm;
+  }
+
+  .product-details {
+    list-style: none;
+    margin-bottom: 4mm;
+  }
+
+  .product-details li {
+    font-size: 7pt;
+    color: var(--text-secondary);
+    padding: 1mm 0 1mm 3mm;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .product-details li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 1.2mm; height: 1.2mm;
+    background: var(--accent);
+    transform: translateY(-50%);
+  }
+
+  .product-sizes { display: flex; gap: 2mm; margin-bottom: 3mm; }
+
+  .size-chip {
+    width: 8mm; height: 8mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5pt;
+    font-weight: 500;
+    border: 0.5px solid var(--border);
+    color: var(--text-light);
+  }
+
+  .size-chip.available {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .product-whatsapp {
+    font-size: 6.5pt;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-top: auto;
+  }
+
+  /* GUÍA DE TALLES */
+  .size-guide { display: flex; flex-direction: column; }
+  .size-table-wrapper { margin-top: 8mm; }
+
+  .size-table-label {
+    font-size: 8pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 3mm;
+    color: var(--accent);
+  }
+
+  .size-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10mm;
+    font-size: 7.5pt;
+  }
+
+  .size-table th {
+    background: var(--bg-alt);
+    padding: 3mm 4mm;
+    text-align: left;
+    font-weight: 600;
+    font-size: 6.5pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .size-table td {
+    padding: 3mm 4mm;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .size-note {
+    font-size: 7pt;
+    color: var(--text-light);
+    line-height: 1.6;
+    border-left: 2px solid var(--accent);
+    padding-left: 4mm;
+    margin-top: 5mm;
+  }
+
+  /* POLÍTICAS */
+  .policies { display: flex; flex-direction: column; }
+
+  .policy-block { margin-bottom: 10mm; }
+
+  .policy-title {
+    font-size: 10pt;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 3mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid var(--border);
+    color: var(--accent);
+  }
+
+  .policy-list { list-style: none; }
+
+  .policy-list li {
+    font-size: 7.5pt;
+    color: var(--text-secondary);
+    padding: 2mm 0 2mm 4mm;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .policy-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* CONTRAPORTADA */
+  .back-cover {
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30mm;
+  }
+
+  .back-brand {
+    font-size: 32pt;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3mm;
+  }
+
+  .back-sub {
+    font-size: 8pt;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 15mm;
+  }
+
+  .back-divider {
+    width: 30mm;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin-bottom: 15mm;
+  }
+
+  .back-contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6mm;
+    margin-bottom: 20mm;
+  }
+
+  .back-contact-label {
+    font-size: 6pt;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1.5mm;
+  }
+
+  .back-contact-value {
+    font-size: 9pt;
+    font-weight: 400;
+    color: var(--accent-light);
+    letter-spacing: 0.5px;
+  }
+
+  .back-legal {
+    font-size: 6pt;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    max-width: 120mm;
+  }
+
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4 portrait; margin: 0; }
+  }
+
+  @media screen and (max-width: 800px) {
+    .page { width: 100%; min-height: auto; margin: 0; padding: 8mm; box-shadow: none; }
+    .product-card { grid-template-columns: 1fr; }
+    .product-image { width: 100%; height: 80vw; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="page cover">
+  <div class="cover-image">
+    <div class="cover-image-placeholder">Foto hero<br>vertical<br>1200 × 1500 px mín.</div>
+  </div>
+  <div class="cover-content">
+    <div class="cover-brand">AG</div>
+    <div class="cover-sub">Ropa Importada</div>
+    <div class="cover-divider"></div>
+    <div class="cover-title">Catálogo</div>
+    <div class="cover-season">Temporada [ASIGNAR] — 2026</div>
+  </div>
+</div>
+
+<!-- CÓMO COMPRAR -->
+<div class="page">
+  <div class="page-content how-to-buy">
+    <div class="section-title">Cómo comprar</div>
+    <div class="section-subtitle">Comprá fácil y rápido desde tu celular. Solo necesitás WhatsApp.</div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-number">01</div>
+        <div class="step-title">Elegí tu prenda</div>
+        <div class="step-desc">Recorré el catálogo y anotá el código del producto que te gusta (ej: AG-001).</div>
+      </div>
+      <div class="step">
+        <div class="step-number">02</div>
+        <div class="step-title">Escribinos</div>
+        <div class="step-desc">Mandanos un mensaje por WhatsApp al [ASIGNAR] con el código, talle y color.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">03</div>
+        <div class="step-title">Confirmá el pago</div>
+        <div class="step-desc">Te pasamos los datos para transferencia, Mercado Pago o efectivo. [ASIGNAR]</div>
+      </div>
+      <div class="step">
+        <div class="step-number">04</div>
+        <div class="step-title">Recibí tu pedido</div>
+        <div class="step-desc">Coordinamos el envío o retiro. Hacemos envíos a todo el país. [ASIGNAR]</div>
+      </div>
+    </div>
+    <div class="how-to-note">
+      Atendemos de [ASIGNAR horario]. Respondemos todos los mensajes en orden de llegada.<br>
+      Consultá stock antes de transferir. Los precios pueden variar sin previo aviso.
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>WhatsApp [ASIGNAR]</span>
+    <span>Instagram [ASIGNAR]</span>
+    <span>Envíos a todo el país</span>
+    <span class="page-number">02</span>
+  </div>
+</div>
+
+<!-- SEPARADOR -->
+<div class="page">
+  <div class="page-content section-divider">
+    <div class="section-divider-label">Colección</div>
+    <div class="section-divider-title">Productos</div>
+    <div class="section-divider-line"></div>
+  </div>
+  <div class="page-footer">
+    <span>WhatsApp [ASIGNAR]</span>
+    <span>Instagram [ASIGNAR]</span>
+    <span>Envíos a todo el país</span>
+    <span class="page-number">03</span>
+  </div>
+</div>
+
+<!-- EJEMPLO: Página de producto AG-001 / AG-002 (Noir) -->
+<div class="page">
+  <div class="page-content products-page">
+    <div class="product-card">
+      <div class="product-image">
+        <div class="product-image-placeholder">Foto producto<br>AG-001</div>
+        <span class="product-tag tag-new">Nuevo</span>
+      </div>
+      <div class="product-info">
+        <div class="product-code">AG-001</div>
+        <div class="product-name">[Nombre del producto]</div>
+        <div class="product-price"><span class="currency">$</span>[ASIGNAR]</div>
+        <div class="product-desc">[Descripción breve del producto, 1-2 líneas máximo. ASIGNAR]</div>
+        <ul class="product-details">
+          <li>Material: [ASIGNAR]</li>
+          <li>Color: [ASIGNAR]</li>
+          <li>Fit: [ASIGNAR]</li>
+        </ul>
+        <div class="product-sizes">
+          <span class="size-chip available">S</span>
+          <span class="size-chip available">M</span>
+          <span class="size-chip available">L</span>
+          <span class="size-chip available">XL</span>
+          <span class="size-chip">XXL</span>
+        </div>
+        <div class="product-whatsapp">Pedilo por WhatsApp: AG-001</div>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-image">
+        <div class="product-image-placeholder">Foto producto<br>AG-002</div>
+      </div>
+      <div class="product-info">
+        <div class="product-code">AG-002</div>
+        <div class="product-name">[Nombre del producto]</div>
+        <div class="product-price"><span class="currency">$</span>[ASIGNAR]</div>
+        <div class="product-desc">[Descripción breve del producto, 1-2 líneas máximo. ASIGNAR]</div>
+        <ul class="product-details">
+          <li>Material: [ASIGNAR]</li>
+          <li>Color: [ASIGNAR]</li>
+          <li>Fit: [ASIGNAR]</li>
+        </ul>
+        <div class="product-sizes">
+          <span class="size-chip available">S</span>
+          <span class="size-chip available">M</span>
+          <span class="size-chip available">L</span>
+          <span class="size-chip available">XL</span>
+          <span class="size-chip available">XXL</span>
+        </div>
+        <div class="product-whatsapp">Pedilo por WhatsApp: AG-002</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>WhatsApp [ASIGNAR]</span>
+    <span>Instagram [ASIGNAR]</span>
+    <span>Envíos a todo el país</span>
+    <span class="page-number">04</span>
+  </div>
+</div>
+
+<!-- NOTA: Este archivo contiene las 4 páginas ejemplo de la dirección "Noir Minimal".
+     El catálogo completo con los 50 productos está en catalogo-ag-ropa.html (Editorial B).
+     Para usar la dirección Noir, replicar la estructura de catalogo-ag-ropa.html
+     aplicando este CSS. -->
+
+<!-- GUÍA DE TALLES (ejemplo Noir) -->
+<div class="page">
+  <div class="page-content size-guide">
+    <div class="section-title">Guía de talles</div>
+    <div class="section-subtitle">Las medidas son orientativas. Ante la duda, consultanos por WhatsApp.</div>
+    <div class="size-table-wrapper">
+      <div class="size-table-label">Remeras / Buzos / Camperas</div>
+      <table class="size-table">
+        <thead>
+          <tr><th>Talle</th><th>Pecho (cm)</th><th>Largo (cm)</th><th>Hombro (cm)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>M</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>L</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>XL</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>XXL</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="size-table-wrapper">
+      <div class="size-table-label">Pantalones / Joggers / Shorts</div>
+      <table class="size-table">
+        <thead>
+          <tr><th>Talle</th><th>Cintura (cm)</th><th>Cadera (cm)</th><th>Largo (cm)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>M</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>L</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>XL</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+          <tr><td>XXL</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td><td>[ASIGNAR]</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="size-note">
+      Las medidas corresponden a la prenda extendida, no al cuerpo. [ASIGNAR notas adicionales]
+    </div>
+  </div>
+  <div class="page-footer">
+    <span>WhatsApp [ASIGNAR]</span>
+    <span>Instagram [ASIGNAR]</span>
+    <span>Envíos a todo el país</span>
+    <span class="page-number">29</span>
+  </div>
+</div>
+
+<!-- CONTRAPORTADA (Noir) -->
+<div class="page cover back-cover">
+  <div class="back-brand">AG</div>
+  <div class="back-sub">Ropa Importada</div>
+  <div class="back-divider"></div>
+  <div class="back-contact-grid">
+    <div class="back-contact-item">
+      <div class="back-contact-label">WhatsApp</div>
+      <div class="back-contact-value">[ASIGNAR número]</div>
+    </div>
+    <div class="back-contact-item">
+      <div class="back-contact-label">Instagram</div>
+      <div class="back-contact-value">@[ASIGNAR]</div>
+    </div>
+    <div class="back-contact-item">
+      <div class="back-contact-label">Ubicación</div>
+      <div class="back-contact-value">[ASIGNAR ciudad/zona]</div>
+    </div>
+    <div class="back-contact-item">
+      <div class="back-contact-label">Horario de atención</div>
+      <div class="back-contact-value">[ASIGNAR horario]</div>
+    </div>
+  </div>
+  <div class="back-legal">
+    Los precios pueden variar sin previo aviso. Consultá disponibilidad antes de transferir. [ASIGNAR]
+  </div>
+</div>
+
+</body>
+</html>

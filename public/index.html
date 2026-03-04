@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AG - Ropa Importada</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="portal">
+    <div style="text-align:center;">
+      <img class="portal-logo" src="/logo-ag.jpeg" alt="AG - Ropa Importada" style="max-width: 330px; height: auto;">
+    </div>
+
+    <div class="portal-cards">
+      <a href="/catalogo/mujer" class="portal-card" id="card-mujer">
+        <div class="portal-card-title">Mujer</div>
+        <div class="portal-card-count" id="count-mujer">Cargando...</div>
+      </a>
+      <a href="/catalogo/hombre" class="portal-card" id="card-hombre">
+        <div class="portal-card-title">Hombre</div>
+        <div class="portal-card-count" id="count-hombre">Cargando...</div>
+      </a>
+    </div>
+
+    <div class="portal-footer">
+      <a href="https://wa.me/5493515632163" style="color:inherit;text-decoration:none;">WhatsApp 351-563-2163</a>
+      &nbsp;&bull;&nbsp;
+      <a href="https://instagram.com/ropaimportada.ag" target="_blank" style="color:inherit;text-decoration:none;">@ropaimportada.ag</a>
+    </div>
+  </div>
+
+  <script>
+    async function loadCounts() {
+      try {
+        const res = await fetch('/api/products');
+        const products = await res.json();
+        const unisex = products.filter(p => p.gender === 'unisex').length;
+        const mujer = products.filter(p => p.gender === 'mujer').length + unisex;
+        const hombre = products.filter(p => p.gender === 'hombre').length + unisex;
+        document.getElementById('count-mujer').textContent = `${mujer} producto${mujer !== 1 ? 's' : ''}`;
+        document.getElementById('count-hombre').textContent = `${hombre} producto${hombre !== 1 ? 's' : ''}`;
+      } catch (e) {
+        document.getElementById('count-mujer').textContent = '';
+        document.getElementById('count-hombre').textContent = '';
+      }
+    }
+    loadCounts();
+  </script>
+</body>
+</html>

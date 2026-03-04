@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AG Admin</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    /* Media upload grid */
+    .media-upload-zone {
+      border: 2px dashed var(--border);
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition);
+      background: var(--bg);
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .media-upload-zone:hover { border-color: var(--accent); }
+    .media-upload-zone input[type="file"] {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+    }
+    .media-upload-zone .hint { font-size: 12px; color: var(--text-light); margin-top: 6px; letter-spacing: 0.3px; }
+
+    .media-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .media-preview-item {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: var(--bg-alt);
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color var(--transition);
+    }
+    .media-preview-item.is-cover { border-color: var(--accent); }
+    .media-preview-item img,
+    .media-preview-item video {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .media-preview-item .cover-badge {
+      position: absolute;
+      top: 4px; left: 4px;
+      background: var(--accent);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 3px 7px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .media-preview-item .remove-media {
+      position: absolute;
+      top: 4px; right: 4px;
+      background: var(--danger);
+      color: white;
+      border: none;
+      width: 18px; height: 18px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .media-preview-item:hover .remove-media { opacity: 1; }
+    .media-preview-item .video-icon {
+      position: absolute;
+      bottom: 4px; left: 4px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      font-size: 10px;
+      padding: 3px 7px;
+      letter-spacing: 0.5px;
+    }
+    .media-help {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .product-admin-media-count {
+      font-size: 12px;
+      color: var(--text-light);
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* Gender row hide/show */
+    .form-row-gender { transition: all var(--transition); }
+    .form-row-gender.hidden {
+      opacity: 0.3;
+      pointer-events: none;
+      max-height: 0;
+      overflow: hidden;
+      margin: 0;
+    }
+    .accessory-notice {
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      padding: 8px 0;
+      display: none;
+    }
+    .accessory-notice.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="admin">
+    <header class="admin-header">
+      <div class="admin-logo">AG <span>Panel Admin</span></div>
+      <nav class="admin-nav">
+        <a href="/">Portal</a>
+        <a href="/catalogo/mujer">Mujer</a>
+        <a href="/catalogo/hombre">Hombre</a>
+        <a href="#" onclick="logout()" style="color:var(--danger);">Salir</a>
+      </nav>
+    </header>
+
+    <div class="admin-body">
+      <div class="stats-bar">
+        <div class="stat-card"><div class="stat-label">Total</div><div class="stat-value" id="stat-total">0</div></div>
+        <div class="stat-card"><div class="stat-label">Mujer</div><div class="stat-value" id="stat-mujer">0</div></div>
+        <div class="stat-card"><div class="stat-label">Hombre</div><div class="stat-value" id="stat-hombre">0</div></div>
+        <div class="stat-card"><div class="stat-label">Accesorios</div><div class="stat-value" id="stat-accesorios">0</div></div>
+      </div>
+
+      <div class="admin-toolbar">
+        <h2>Productos</h2>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div class="admin-filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="mujer">Mujer</button>
+            <button class="filter-btn" data-filter="hombre">Hombre</button>
+            <button class="filter-btn" data-filter="unisex">Accesorios</button>
+          </div>
+          <button class="btn btn-primary" onclick="openModal()">+ Nuevo</button>
+        </div>
+      </div>
+
+      <div class="products-grid" id="products-grid"></div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Nuevo producto</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="product-form" enctype="multipart/form-data">
+          <input type="hidden" id="form-id" value="">
+
+          <!-- MEDIA UPLOAD -->
+          <div class="form-group">
+            <label>Imagenes y videos</label>
+            <div class="media-upload-zone" id="upload-zone">
+              <input type="file" id="form-media" accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime,video/webm" multiple>
+              <div style="font-size:12px; color:var(--text-secondary);">Hace clic o arrastra archivos</div>
+              <div class="hint">JPG, PNG, WebP, MP4, MOV &mdash; Max. 50 MB c/u &mdash; Hasta 15</div>
+            </div>
+            <div class="media-preview-grid" id="media-preview-grid"></div>
+            <div class="media-help">Hace clic en una imagen para marcarla como <strong>portada</strong>. Usa la <strong>X</strong> para eliminar.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre (max. 32 caract.)</label>
+              <input type="text" id="form-name" maxlength="32" placeholder="Ej: Remera Oversize Print" required>
+            </div>
+            <div class="form-group">
+              <label>Precio (ARS)</label>
+              <input type="text" id="form-price" placeholder="Ej: 45.900" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Categoria</label>
+            <select id="form-category" required>
+              <option value="">Seleccionar...</option>
+              <option value="deportivo">Deportivo</option>
+              <option value="remeras-camisas">Remeras / Camisas</option>
+              <option value="abrigos">Abrigos</option>
+              <option value="pantalones">Pantalones</option>
+              <option value="ropa-interior">Ropa Interior</option>
+              <option value="accesorio">Accesorios</option>
+            </select>
+          </div>
+
+          <div class="form-row form-row-gender" id="gender-row">
+            <div class="form-group">
+              <label>Genero</label>
+              <select id="form-gender">
+                <option value="">Seleccionar...</option>
+                <option value="mujer">Mujer</option>
+                <option value="hombre">Hombre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Etiqueta (opcional)</label>
+              <select id="form-tag">
+                <option value="">Sin etiqueta</option>
+                <option value="nuevo">Nuevo</option>
+                <option value="oferta">Oferta</option>
+                <option value="ultimos">Ultimos talles</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="accessory-notice" id="accessory-notice">Los accesorios aparecen en ambos catalogos (Mujer y Hombre)</div>
+
+          <div class="form-group" id="tag-row-acc" style="display:none;">
+            <label>Etiqueta (opcional)</label>
+            <select id="form-tag-acc">
+              <option value="">Sin etiqueta</option>
+              <option value="nuevo">Nuevo</option>
+              <option value="oferta">Oferta</option>
+              <option value="ultimos">Ultimos talles</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Descripcion breve</label>
+            <textarea id="form-desc" rows="2" placeholder="Descripcion corta del producto..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Talles disponibles</label>
+            <div class="form-sizes">
+              <input type="checkbox" id="size-s" class="size-toggle" checked><label for="size-s">S</label>
+              <input type="checkbox" id="size-m" class="size-toggle" checked><label for="size-m">M</label>
+              <input type="checkbox" id="size-l" class="size-toggle" checked><label for="size-l">L</label>
+              <input type="checkbox" id="size-xl" class="size-toggle" checked><label for="size-xl">XL</label>
+              <input type="checkbox" id="size-xxl" class="size-toggle" checked><label for="size-xxl">XXL</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save" onclick="saveProduct()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    let allProducts = [];
+    let currentFilter = 'all';
+    let editingId = null;
+
+    let mediaItems = [];
+    let coverIdx = 0;
+
+    // --- Category -> Gender toggle ---
+    const categorySelect = document.getElementById('form-category');
+    const genderRow = document.getElementById('gender-row');
+    const accessoryNotice = document.getElementById('accessory-notice');
+    const tagRowAcc = document.getElementById('tag-row-acc');
+
+    categorySelect.addEventListener('change', function() {
+      const isAccessory = this.value === 'accesorio';
+      if (isAccessory) {
+        genderRow.classList.add('hidden');
+        accessoryNotice.classList.add('visible');
+        tagRowAcc.style.display = '';
+        document.getElementById('form-gender').value = 'unisex';
+      } else {
+        genderRow.classList.remove('hidden');
+        accessoryNotice.classList.remove('visible');
+        tagRowAcc.style.display = 'none';
+        if (document.getElementById('form-gender').value === 'unisex') {
+          document.getElementById('form-gender').value = '';
+        }
+      }
+    });
+
+    // --- API ---
+    async function fetchProducts() {
+      const res = await fetch('/api/products');
+      allProducts = await res.json();
+      render();
+      updateStats();
+    }
+
+    function updateStats() {
+      document.getElementById('stat-total').textContent = allProducts.length;
+      document.getElementById('stat-mujer').textContent = allProducts.filter(p => p.gender === 'mujer').length;
+      document.getElementById('stat-hombre').textContent = allProducts.filter(p => p.gender === 'hombre').length;
+      document.getElementById('stat-accesorios').textContent = allProducts.filter(p => p.gender === 'unisex' || p.category === 'accesorio').length;
+    }
+
+    function getFiltered() {
+      if (currentFilter === 'all') return allProducts;
+      if (currentFilter === 'unisex') return allProducts.filter(p => p.gender === 'unisex' || p.category === 'accesorio');
+      return allProducts.filter(p => p.gender === currentFilter);
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    function tagLabel(t) { return {nuevo:'Nuevo',oferta:'Oferta',ultimos:'Ultimos talles'}[t] || ''; }
+    function catLabel(c) { return {deportivo:'Deportivo','remeras-camisas':'Remeras/Camisas',abrigos:'Abrigos',pantalones:'Pantalones','ropa-interior':'Ropa Interior',accesorio:'Accesorios'}[c] || 'Sin categoria'; }
+
+    function genderLabel(g) {
+      if (g === 'unisex') return 'Unisex';
+      if (g === 'mujer') return '&#9792; Mujer';
+      return '&#9794; Hombre';
+    }
+
+    function getCover(p) {
+      if (!p.media || p.media.length === 0) return null;
+      return p.media.find(m => m.isCover) || p.media[0];
+    }
+
+    // --- RENDER ---
+    function render() {
+      const grid = document.getElementById('products-grid');
+      const products = getFiltered();
+
+      if (products.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state" style="grid-column:1/-1;">
+            <div class="empty-state-icon">&#128722;</div>
+            <h3>No hay productos cargados</h3>
+            <p>Usa el boton "+ Nuevo" para empezar.</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => {
+        const cover = getCover(p);
+        const mediaCount = (p.media || []).length;
+        const videoCount = (p.media || []).filter(m => m.type === 'video').length;
+        let mediaLabel = `${mediaCount} archivo${mediaCount !== 1 ? 's' : ''}`;
+        if (videoCount > 0) mediaLabel += ` (${videoCount} video${videoCount !== 1 ? 's' : ''})`;
+
+        return `
+        <div class="product-admin-card">
+          <div class="product-admin-img">
+            ${cover
+              ? (cover.type === 'video'
+                ? `<video src="${cover.path}" autoplay muted loop playsinline preload="metadata"></video><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;pointer-events:none;">&#9654;</span>`
+                : `<img src="${cover.path}" alt="${esc(p.name)}" loading="lazy">`)
+              : `<span class="no-img">Sin imagen</span>`}
+            ${p.tag ? `<span class="product-admin-badge badge-${p.tag}">${tagLabel(p.tag)}</span>` : ''}
+            ${mediaCount > 1 ? `<span style="position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);color:#fff;font-size:9px;padding:3px 8px;letter-spacing:1px;">${mediaCount}</span>` : ''}
+          </div>
+          <div class="product-admin-body">
+            <div class="product-admin-code">${p.code}</div>
+            <div class="product-admin-name">${esc(p.name)}</div>
+            <div class="product-admin-gender">${genderLabel(p.gender)} &bull; ${catLabel(p.category)}</div>
+            <div class="product-admin-price">$${esc(p.price)}</div>
+            <div class="product-admin-media-count">${mediaLabel}</div>
+            <div class="product-admin-actions">
+              <button class="btn btn-outline btn-sm" onclick="editProduct('${p.id}')">Editar</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteProduct('${p.id}','${esc(p.name)}')">Eliminar</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // --- FILTERS ---
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        render();
+      });
+    });
+
+    // --- MEDIA MANAGEMENT ---
+    function renderMediaPreview() {
+      const grid = document.getElementById('media-preview-grid');
+      if (mediaItems.length === 0) {
+        grid.innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = mediaItems.map((item, i) => {
+        const isCover = i === coverIdx;
+        let thumb = '';
+        if (item.type === 'video') {
+          const src = item.isExisting ? item.path : item.blobUrl;
+          thumb = `<video src="${src}" muted preload="metadata"></video><span class="video-icon">VIDEO</span>`;
+        } else {
+          const src = item.isExisting ? item.path : item.blobUrl;
+          thumb = `<img src="${src}" alt="">`;
+        }
+
+        return `
+          <div class="media-preview-item ${isCover ? 'is-cover' : ''}" onclick="setCover(${i})" title="Clic para marcar como portada">
+            ${thumb}
+            ${isCover ? '<span class="cover-badge">Portada</span>' : ''}
+            <button class="remove-media" onclick="event.stopPropagation(); removeMedia(${i})" title="Eliminar">&times;</button>
+          </div>`;
+      }).join('');
+    }
+
+    function setCover(idx) {
+      coverIdx = idx;
+      renderMediaPreview();
+    }
+
+    function removeMedia(idx) {
+      if (mediaItems[idx].blobUrl) URL.revokeObjectURL(mediaItems[idx].blobUrl);
+      mediaItems.splice(idx, 1);
+      if (coverIdx >= mediaItems.length) coverIdx = Math.max(0, mediaItems.length - 1);
+      if (coverIdx === idx) coverIdx = 0;
+      else if (idx < coverIdx) coverIdx--;
+      renderMediaPreview();
+    }
+
+    document.getElementById('form-media').addEventListener('change', function(e) {
+      for (const file of e.target.files) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const isVideo = ['mp4', 'mov', 'webm'].includes(ext);
+        const blobUrl = URL.createObjectURL(file);
+        mediaItems.push({
+          file,
+          blobUrl,
+          type: isVideo ? 'video' : 'image',
+          isCover: false,
+          isExisting: false
+        });
+      }
+      if (mediaItems.length > 0 && !mediaItems.some((_, i) => i === coverIdx)) {
+        coverIdx = 0;
+      }
+      renderMediaPreview();
+      this.value = '';
+    });
+
+    // --- MODAL ---
+    function openModal(id) {
+      editingId = id || null;
+      document.getElementById('modal-title').textContent = id ? 'Editar producto' : 'Nuevo producto';
+      document.getElementById('btn-save').textContent = id ? 'Guardar cambios' : 'Guardar';
+      document.getElementById('form-id').value = id || '';
+      document.getElementById('product-form').reset();
+
+      // Reset gender row visibility
+      genderRow.classList.remove('hidden');
+      accessoryNotice.classList.remove('visible');
+      tagRowAcc.style.display = 'none';
+
+      mediaItems.forEach(m => { if (m.blobUrl) URL.revokeObjectURL(m.blobUrl); });
+      mediaItems = [];
+      coverIdx = 0;
+
+      if (id) {
+        const p = allProducts.find(x => x.id === id);
+        if (p) {
+          document.getElementById('form-name').value = p.name || '';
+          document.getElementById('form-price').value = p.price || '';
+          document.getElementById('form-category').value = p.category || '';
+          document.getElementById('form-gender').value = p.gender || '';
+          document.getElementById('form-tag').value = p.tag || '';
+          document.getElementById('form-tag-acc').value = p.tag || '';
+          document.getElementById('form-desc').value = p.description || '';
+
+          // If accessory, hide gender
+          if (p.category === 'accesorio' || p.gender === 'unisex') {
+            genderRow.classList.add('hidden');
+            accessoryNotice.classList.add('visible');
+            tagRowAcc.style.display = '';
+            document.getElementById('form-gender').value = 'unisex';
+          }
+
+          if (p.sizes) {
+            document.getElementById('size-s').checked = !!p.sizes.S;
+            document.getElementById('size-m').checked = !!p.sizes.M;
+            document.getElementById('size-l').checked = !!p.sizes.L;
+            document.getElementById('size-xl').checked = !!p.sizes.XL;
+            document.getElementById('size-xxl').checked = !!p.sizes.XXL;
+          }
+
+          if (p.media) {
+            p.media.forEach((m, i) => {
+              mediaItems.push({
+                path: m.path,
+                type: m.type,
+                isCover: m.isCover,
+                isExisting: true
+              });
+              if (m.isCover) coverIdx = i;
+            });
+          }
+        }
+      }
+
+      renderMediaPreview();
+      document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      editingId = null;
+      mediaItems.forEach(m => { if (m.blobUrl) URL.revokeObjectURL(m.blobUrl); });
+      mediaItems = [];
+    }
+
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // --- SAVE ---
+    async function saveProduct() {
+      const name = document.getElementById('form-name').value.trim();
+      const price = document.getElementById('form-price').value.trim();
+      const category = document.getElementById('form-category').value;
+      const isAccessory = category === 'accesorio';
+      const gender = isAccessory ? 'unisex' : document.getElementById('form-gender').value;
+      const tag = isAccessory ? document.getElementById('form-tag-acc').value : document.getElementById('form-tag').value;
+
+      if (!name || !price) {
+        showToast('Completa nombre y precio', 'error');
+        return;
+      }
+
+      if (!category) {
+        showToast('Selecciona una categoria', 'error');
+        return;
+      }
+
+      if (!isAccessory && !gender) {
+        showToast('Selecciona un genero', 'error');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('price', price);
+      formData.append('gender', gender);
+      formData.append('category', category);
+      formData.append('description', document.getElementById('form-desc').value.trim());
+      formData.append('tag', tag);
+      formData.append('sizes', JSON.stringify({
+        S: document.getElementById('size-s').checked,
+        M: document.getElementById('size-m').checked,
+        L: document.getElementById('size-l').checked,
+        XL: document.getElementById('size-xl').checked,
+        XXL: document.getElementById('size-xxl').checked
+      }));
+
+      const existing = mediaItems.filter(m => m.isExisting).map(m => ({
+        path: m.path, type: m.type, isCover: false
+      }));
+      formData.append('existingMedia', JSON.stringify(existing));
+
+      const newFiles = mediaItems.filter(m => !m.isExisting);
+      for (const item of newFiles) {
+        formData.append('media', item.file);
+      }
+
+      formData.append('coverIndex', String(coverIdx));
+
+      try {
+        const url = editingId ? `/api/products/${editingId}` : '/api/products';
+        const method = editingId ? 'PUT' : 'POST';
+        const res = await fetch(url, { method, body: formData });
+        if (!res.ok) throw new Error((await res.json()).error || 'Error');
+
+        closeModal();
+        showToast(editingId ? 'Producto actualizado' : 'Producto creado', 'success');
+        await fetchProducts();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    function editProduct(id) { openModal(id); }
+
+    async function deleteProduct(id, name) {
+      if (!confirm(`Eliminar "${name}"? Esta accion no se puede deshacer.`)) return;
+      try {
+        const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Error');
+        showToast('Producto eliminado', 'success');
+        await fetchProducts();
+      } catch (e) { showToast(e.message, 'error'); }
+    }
+
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast show ' + type;
+      setTimeout(() => { t.className = 'toast'; }, 3000);
+    }
+
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/login';
+    }
+
+    fetchProducts();
+  </script>
+</body>
+</html>
