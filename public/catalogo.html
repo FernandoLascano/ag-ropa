@@ -451,7 +451,6 @@
             <div class="catalog-item-name">${esc(p.name)}</div>
             <div class="catalog-item-price">${p.currency === 'ARS' ? '$' : 'US$'}${esc(p.price)}</div>
             <div class="catalog-item-sizes">${sizesHtml}</div>
-            <div class="catalog-item-cta">Consultar &mdash; ${p.code}</div>
           </div>
         </div>`;
     }
@@ -624,9 +623,6 @@
         ${p.description ? `<div class="lb-desc">${esc(p.description)}</div>` : ''}
         ${details ? `<div class="lb-details">${details}</div>` : ''}
         <div class="lb-sizes">${sizesHtml}</div>
-        <a class="lb-cta" href="https://wa.me/5493515632163?text=Hola!%20Me%20interesa%20${encodeURIComponent(p.code + ' - ' + p.name)}" target="_blank">
-          Consultar por WhatsApp
-        </a>
       `;
     }
 
