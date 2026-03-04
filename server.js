@@ -3,64 +3,40 @@ const express = require('express');
 const multer = require('multer');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+const cloudinary = require('cloudinary').v2;
+const { createClient } = require('@supabase/supabase-js');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-const DATA_FILE = path.join(__dirname, 'data', 'products.json');
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
+// --- Cloudinary ---
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-if (!fs.existsSync(path.dirname(DATA_FILE))) fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
-if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]');
+// --- Supabase ---
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
+);
 
-function readProducts() {
-  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8') || '[]');
-}
-
-function writeProducts(products) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(products, null, 2));
-}
-
-function generateCode(gender, products) {
+async function generateCode() {
   const prefix = 'AG';
-  const nums = products
-    .filter(p => p.code && p.code.startsWith(prefix))
+  const { data } = await supabase
+    .from('products')
+    .select('code')
+    .like('code', 'AG-%');
+  const nums = (data || [])
     .map(p => parseInt(p.code.replace(/^AG-/, ''), 10))
     .filter(n => !isNaN(n));
   const next = nums.length > 0 ? Math.max(...nums) + 1 : 1;
   return `${prefix}-${String(next).padStart(3, '0')}`;
 }
 
-// Migrate old products (single image -> media array)
-function migrateProduct(p) {
-  if (!p.media) {
-    p.media = [];
-    if (p.image) {
-      p.media.push({ path: p.image, type: 'image', isCover: true });
-      delete p.image;
-    }
-  }
-  return p;
-}
-
-function getCover(product) {
-  if (!product.media || product.media.length === 0) return null;
-  const cover = product.media.find(m => m.isCover);
-  return cover || product.media[0];
-}
-
-// --- Multer ---
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOADS_DIR),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    cb(null, `media-${Date.now()}-${Math.random().toString(36).substring(2, 6)}${ext}`);
-  }
-});
-
+// --- Multer (memory storage for Cloudinary) ---
 const fileFilter = (req, file, cb) => {
   const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.mp4', '.mov', '.webm'];
   const ext = path.extname(file.originalname).toLowerCase();
@@ -68,10 +44,33 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 } // 50MB for videos
+  limits: { fileSize: 50 * 1024 * 1024 }
 });
+
+// Upload buffer to Cloudinary
+function uploadToCloudinary(file) {
+  return new Promise((resolve, reject) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    const isVideo = ['.mp4', '.mov', '.webm'].includes(ext);
+    const resourceType = isVideo ? 'video' : 'image';
+
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: 'ag-catalogo', resource_type: resourceType },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve({ url: result.secure_url, publicId: result.public_id, type: resourceType });
+      }
+    );
+    stream.end(file.buffer);
+  });
+}
+
+// Delete from Cloudinary
+function deleteFromCloudinary(publicId, resourceType) {
+  return cloudinary.uploader.destroy(publicId, { resource_type: resourceType || 'image' });
+}
 
 // --- Admin credentials ---
 const ADMIN_USER = 'admin';
@@ -87,7 +86,6 @@ app.use(session({
   cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 horas
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(UPLOADS_DIR));
 
 function ensureAuth(req, res, next) {
   if (req.session && req.session.admin) return next();
@@ -118,157 +116,189 @@ app.post('/api/logout', (req, res) => {
 // --- API ---
 
 // GET all products
-app.get('/api/products', (req, res) => {
-  let products = readProducts().map(migrateProduct);
-  if (req.query.gender) {
-    products = products.filter(p => p.gender === req.query.gender || p.gender === 'unisex');
+app.get('/api/products', async (req, res) => {
+  try {
+    let query = supabase.from('products').select('*').order('code');
+    if (req.query.gender) {
+      query = query.or(`gender.eq.${req.query.gender},gender.eq.unisex`);
+    }
+    const { data, error } = await query;
+    if (error) throw error;
+    res.json(data || []);
+  } catch (err) {
+    console.error('Error fetching products:', err);
+    res.status(500).json({ error: 'Error al obtener productos' });
   }
-  products.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
-  res.json(products);
 });
 
 // GET single
-app.get('/api/products/:id', (req, res) => {
-  const products = readProducts().map(migrateProduct);
-  const product = products.find(p => p.id === req.params.id);
-  if (!product) return res.status(404).json({ error: 'No encontrado' });
-  res.json(product);
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', req.params.id)
+      .single();
+    if (error || !data) return res.status(404).json({ error: 'No encontrado' });
+    res.json(data);
+  } catch (err) {
+    res.status(404).json({ error: 'No encontrado' });
+  }
 });
 
-// POST create product (multiple files)
-app.post('/api/products', ensureAuth, upload.array('media', 15), (req, res) => {
-  const products = readProducts().map(migrateProduct);
-  const { name, price, description, category, material, color, fit, sizes, tag, coverIndex } = req.body;
-  let gender = req.body.gender;
+// POST create product
+app.post('/api/products', ensureAuth, upload.array('media', 15), async (req, res) => {
+  try {
+    const { name, price, description, category, sizes, tag, coverIndex } = req.body;
+    let gender = req.body.gender;
 
-  if (!name || !price) {
-    return res.status(400).json({ error: 'Nombre y precio son obligatorios' });
-  }
+    if (!name || !price) {
+      return res.status(400).json({ error: 'Nombre y precio son obligatorios' });
+    }
 
-  // Accessories are always unisex
-  if (category === 'accesorio') {
-    gender = 'unisex';
-  } else if (!gender) {
-    return res.status(400).json({ error: 'El género es obligatorio para esta categoría' });
-  }
-
-  const coverIdx = parseInt(coverIndex) || 0;
-  const media = (req.files || []).map((file, i) => {
-    const ext = path.extname(file.filename).toLowerCase();
-    const isVideo = ['.mp4', '.mov', '.webm'].includes(ext);
-    return {
-      path: `/uploads/${file.filename}`,
-      type: isVideo ? 'video' : 'image',
-      isCover: i === coverIdx
-    };
-  });
-
-  // Ensure at least one cover
-  if (media.length > 0 && !media.some(m => m.isCover)) {
-    media[0].isCover = true;
-  }
-
-  const product = {
-    id: `prod-${Date.now()}`,
-    code: generateCode(gender, products),
-    name: name.substring(0, 32),
-    price,
-    description: description || '',
-    gender,
-    category: category || 'remeras-camisas',
-    material: material || '',
-    color: color || '',
-    fit: fit || '',
-    sizes: sizes ? (typeof sizes === 'string' ? JSON.parse(sizes) : sizes) : { S: true, M: true, L: true, XL: true, XXL: true },
-    tag: tag || '',
-    media,
-    createdAt: new Date().toISOString()
-  };
-
-  products.push(product);
-  writeProducts(products);
-  res.status(201).json(product);
-});
-
-// PUT update product fields (without replacing media)
-app.put('/api/products/:id', ensureAuth, upload.array('media', 15), (req, res) => {
-  const products = readProducts().map(migrateProduct);
-  const idx = products.findIndex(p => p.id === req.params.id);
-  if (idx === -1) return res.status(404).json({ error: 'No encontrado' });
-
-  const { name, price, description, category, material, color, fit, sizes, tag, coverIndex, existingMedia } = req.body;
-  let gender = req.body.gender;
-
-  if (name) products[idx].name = name.substring(0, 32);
-  if (price) products[idx].price = price;
-  if (description !== undefined) products[idx].description = description;
-  if (category) {
-    products[idx].category = category;
     if (category === 'accesorio') {
-      products[idx].gender = 'unisex';
+      gender = 'unisex';
+    } else if (!gender) {
+      return res.status(400).json({ error: 'El género es obligatorio para esta categoría' });
+    }
+
+    const coverIdx = parseInt(coverIndex) || 0;
+
+    // Upload files to Cloudinary
+    const uploads = await Promise.all((req.files || []).map(f => uploadToCloudinary(f)));
+    const media = uploads.map((u, i) => ({
+      path: u.url,
+      publicId: u.publicId,
+      type: u.type,
+      isCover: i === coverIdx
+    }));
+
+    if (media.length > 0 && !media.some(m => m.isCover)) {
+      media[0].isCover = true;
+    }
+
+    const code = await generateCode();
+    const product = {
+      id: `prod-${Date.now()}`,
+      code,
+      name: name.substring(0, 32),
+      price,
+      description: description || '',
+      gender,
+      category: category || 'remeras-camisas',
+      sizes: sizes ? (typeof sizes === 'string' ? JSON.parse(sizes) : sizes) : { S: true, M: true, L: true, XL: true, XXL: true },
+      tag: tag || '',
+      media,
+      created_at: new Date().toISOString()
+    };
+
+    const { data, error } = await supabase.from('products').insert(product).select().single();
+    if (error) throw error;
+    res.status(201).json(data);
+  } catch (err) {
+    console.error('Error creating product:', err);
+    res.status(500).json({ error: 'Error al crear producto' });
+  }
+});
+
+// PUT update product
+app.put('/api/products/:id', ensureAuth, upload.array('media', 15), async (req, res) => {
+  try {
+    // Get current product
+    const { data: current, error: fetchErr } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', req.params.id)
+      .single();
+    if (fetchErr || !current) return res.status(404).json({ error: 'No encontrado' });
+
+    const { name, price, description, category, sizes, tag, coverIndex, existingMedia } = req.body;
+    let gender = req.body.gender;
+
+    const updates = {};
+    if (name) updates.name = name.substring(0, 32);
+    if (price) updates.price = price;
+    if (description !== undefined) updates.description = description;
+    if (category) {
+      updates.category = category;
+      if (category === 'accesorio') {
+        updates.gender = 'unisex';
+      } else if (gender) {
+        updates.gender = gender;
+      }
     } else if (gender) {
-      products[idx].gender = gender;
+      updates.gender = gender;
     }
-  } else if (gender) {
-    products[idx].gender = gender;
-  }
-  if (material !== undefined) products[idx].material = material;
-  if (color !== undefined) products[idx].color = color;
-  if (fit !== undefined) products[idx].fit = fit;
-  if (sizes) products[idx].sizes = typeof sizes === 'string' ? JSON.parse(sizes) : sizes;
-  if (tag !== undefined) products[idx].tag = tag;
+    if (sizes) updates.sizes = typeof sizes === 'string' ? JSON.parse(sizes) : sizes;
+    if (tag !== undefined) updates.tag = tag;
 
-  // Rebuild media array: keep existing + add new
-  let kept = [];
-  if (existingMedia) {
-    const parsed = typeof existingMedia === 'string' ? JSON.parse(existingMedia) : existingMedia;
-    kept = Array.isArray(parsed) ? parsed : [];
-  }
-
-  // Delete removed files
-  const keptPaths = new Set(kept.map(m => m.path));
-  for (const old of (products[idx].media || [])) {
-    if (!keptPaths.has(old.path)) {
-      const filePath = path.join(__dirname, old.path);
-      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    // Rebuild media array
+    let kept = [];
+    if (existingMedia) {
+      const parsed = typeof existingMedia === 'string' ? JSON.parse(existingMedia) : existingMedia;
+      kept = Array.isArray(parsed) ? parsed : [];
     }
+
+    // Delete removed files from Cloudinary
+    const keptPaths = new Set(kept.map(m => m.path));
+    for (const old of (current.media || [])) {
+      if (!keptPaths.has(old.path) && old.publicId) {
+        await deleteFromCloudinary(old.publicId, old.type === 'video' ? 'video' : 'image');
+      }
+    }
+
+    // Upload new files to Cloudinary
+    const uploadResults = await Promise.all((req.files || []).map(f => uploadToCloudinary(f)));
+    const newMedia = uploadResults.map(u => ({
+      path: u.url, publicId: u.publicId, type: u.type, isCover: false
+    }));
+
+    const allMedia = [...kept, ...newMedia];
+    const cIdx = parseInt(coverIndex);
+    allMedia.forEach((m, i) => { m.isCover = (i === cIdx); });
+    if (allMedia.length > 0 && !allMedia.some(m => m.isCover)) {
+      allMedia[0].isCover = true;
+    }
+    updates.media = allMedia;
+
+    const { data, error } = await supabase
+      .from('products')
+      .update(updates)
+      .eq('id', req.params.id)
+      .select()
+      .single();
+    if (error) throw error;
+    res.json(data);
+  } catch (err) {
+    console.error('Error updating product:', err);
+    res.status(500).json({ error: 'Error al actualizar producto' });
   }
-
-  // Add new uploads
-  const newMedia = (req.files || []).map(file => {
-    const ext = path.extname(file.filename).toLowerCase();
-    const isVideo = ['.mp4', '.mov', '.webm'].includes(ext);
-    return { path: `/uploads/${file.filename}`, type: isVideo ? 'video' : 'image', isCover: false };
-  });
-
-  const allMedia = [...kept, ...newMedia];
-
-  // Set cover
-  const cIdx = parseInt(coverIndex);
-  allMedia.forEach((m, i) => { m.isCover = (i === cIdx); });
-  if (allMedia.length > 0 && !allMedia.some(m => m.isCover)) {
-    allMedia[0].isCover = true;
-  }
-
-  products[idx].media = allMedia;
-  writeProducts(products);
-  res.json(products[idx]);
 });
 
 // DELETE product
-app.delete('/api/products/:id', ensureAuth, (req, res) => {
-  let products = readProducts().map(migrateProduct);
-  const product = products.find(p => p.id === req.params.id);
-  if (!product) return res.status(404).json({ error: 'No encontrado' });
+app.delete('/api/products/:id', ensureAuth, async (req, res) => {
+  try {
+    const { data: product, error: fetchErr } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', req.params.id)
+      .single();
+    if (fetchErr || !product) return res.status(404).json({ error: 'No encontrado' });
 
-  for (const m of (product.media || [])) {
-    const filePath = path.join(__dirname, m.path);
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    // Delete media from Cloudinary
+    for (const m of (product.media || [])) {
+      if (m.publicId) {
+        await deleteFromCloudinary(m.publicId, m.type === 'video' ? 'video' : 'image');
+      }
+    }
+
+    const { error } = await supabase.from('products').delete().eq('id', req.params.id);
+    if (error) throw error;
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Error deleting product:', err);
+    res.status(500).json({ error: 'Error al eliminar producto' });
   }
-
-  products = products.filter(p => p.id !== req.params.id);
-  writeProducts(products);
-  res.json({ success: true });
 });
 
 // --- Pages ---
