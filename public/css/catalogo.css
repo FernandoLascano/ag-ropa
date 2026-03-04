@@ -272,13 +272,15 @@
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.3px;
-  color: var(--text-light);
+  color: var(--border);
+  opacity: 0.4;
   border-bottom: 1px solid transparent;
   transition: all var(--transition);
 }
 
 .catalog-size.available {
   color: var(--text);
+  opacity: 1;
   border-bottom-color: var(--text);
 }
 
