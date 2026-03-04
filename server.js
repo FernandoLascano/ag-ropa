@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
-const session = require('express-session');
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
 const { createClient } = require('@supabase/supabase-js');
@@ -75,16 +75,37 @@ function deleteFromCloudinary(publicId, resourceType) {
 // --- Admin credentials ---
 const ADMIN_USER = 'admin';
 const ADMIN_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'admin123', 10);
+const TOKEN_SECRET = process.env.SESSION_SECRET || 'ag-catalogo-secret-default';
+
+// Token helpers (stateless auth for serverless)
+function createToken() {
+  const payload = JSON.stringify({ admin: true, exp: Date.now() + 24 * 60 * 60 * 1000 });
+  const b64 = Buffer.from(payload).toString('base64');
+  const sig = crypto.createHmac('sha256', TOKEN_SECRET).update(b64).digest('hex');
+  return `${b64}.${sig}`;
+}
+
+function verifyToken(token) {
+  if (!token) return false;
+  const [b64, sig] = token.split('.');
+  if (!b64 || !sig) return false;
+  const expected = crypto.createHmac('sha256', TOKEN_SECRET).update(b64).digest('hex');
+  if (sig !== expected) return false;
+  try {
+    const payload = JSON.parse(Buffer.from(b64, 'base64').toString());
+    return payload.admin && payload.exp > Date.now();
+  } catch { return false; }
+}
+
+function parseCookie(req, name) {
+  const header = req.headers.cookie || '';
+  const match = header.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : null;
+}
 
 // --- Middleware ---
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'ag-catalogo-secret-default',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24 horas
-}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // No cache for API routes (prevents Vercel/browser caching)
@@ -97,28 +118,31 @@ app.use('/api', (req, res, next) => {
 });
 
 function ensureAuth(req, res, next) {
-  if (req.session && req.session.admin) return next();
+  const token = parseCookie(req, 'ag_token');
+  if (verifyToken(token)) return next();
   if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'No autorizado' });
   res.redirect('/login');
 }
 
 // --- Auth routes ---
 app.get('/login', (req, res) => {
-  if (req.session && req.session.admin) return res.redirect('/admin');
+  const token = parseCookie(req, 'ag_token');
+  if (verifyToken(token)) return res.redirect('/admin');
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   if (username === ADMIN_USER && bcrypt.compareSync(password || '', ADMIN_HASH)) {
-    req.session.admin = true;
+    const token = createToken();
+    res.cookie('ag_token', token, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, sameSite: 'lax' });
     return res.json({ success: true });
   }
   res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
 });
 
 app.post('/api/logout', (req, res) => {
-  req.session.destroy();
+  res.clearCookie('ag_token');
   res.json({ success: true });
 });
 
