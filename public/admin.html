@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AG Admin</title>
+  <link rel="icon" type="image/jpeg" href="/logo-ag.jpeg">
   <link rel="stylesheet" href="/css/styles.css">
   <style>
     /* Media upload grid */
@@ -178,8 +179,14 @@
               <input type="text" id="form-name" maxlength="32" placeholder="Ej: Remera Oversize Print" required>
             </div>
             <div class="form-group">
-              <label>Precio (ARS)</label>
-              <input type="text" id="form-price" placeholder="Ej: 45.900" required>
+              <label>Precio</label>
+              <div style="display:flex;gap:8px;">
+                <select id="form-currency" style="width:80px;flex-shrink:0;">
+                  <option value="USD">USD</option>
+                  <option value="ARS">ARS</option>
+                </select>
+                <input type="text" id="form-price" placeholder="Ej: 36" required>
+              </div>
             </div>
           </div>
 
@@ -363,7 +370,7 @@
             <div class="product-admin-code">${p.code}</div>
             <div class="product-admin-name">${esc(p.name)}</div>
             <div class="product-admin-gender">${genderLabel(p.gender)} &bull; ${catLabel(p.category)}</div>
-            <div class="product-admin-price">$${esc(p.price)}</div>
+            <div class="product-admin-price">${p.currency === 'ARS' ? '$' : 'US$'}${esc(p.price)}</div>
             <div class="product-admin-media-count">${mediaLabel}</div>
             <div class="product-admin-actions">
               <button class="btn btn-outline btn-sm" onclick="editProduct('${p.id}')">Editar</button>
@@ -468,6 +475,7 @@
         if (p) {
           document.getElementById('form-name').value = p.name || '';
           document.getElementById('form-price').value = p.price || '';
+          document.getElementById('form-currency').value = p.currency || 'USD';
           document.getElementById('form-category').value = p.category || '';
           document.getElementById('form-gender').value = p.gender || '';
           document.getElementById('form-tag').value = p.tag || '';
@@ -543,9 +551,12 @@
         return;
       }
 
+      const currency = document.getElementById('form-currency').value;
+
       const formData = new FormData();
       formData.append('name', name);
       formData.append('price', price);
+      formData.append('currency', currency);
       formData.append('gender', gender);
       formData.append('category', category);
       formData.append('description', document.getElementById('form-desc').value.trim());

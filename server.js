@@ -149,7 +149,7 @@ app.get('/api/products/:id', async (req, res) => {
 // POST create product
 app.post('/api/products', ensureAuth, upload.array('media', 15), async (req, res) => {
   try {
-    const { name, price, description, category, sizes, tag, coverIndex } = req.body;
+    const { name, price, currency, description, category, sizes, tag, coverIndex } = req.body;
     let gender = req.body.gender;
 
     if (!name || !price) {
@@ -183,6 +183,7 @@ app.post('/api/products', ensureAuth, upload.array('media', 15), async (req, res
       code,
       name: name.substring(0, 32),
       price,
+      currency: currency || 'USD',
       description: description || '',
       gender,
       category: category || 'remeras-camisas',
@@ -212,12 +213,13 @@ app.put('/api/products/:id', ensureAuth, upload.array('media', 15), async (req, 
       .single();
     if (fetchErr || !current) return res.status(404).json({ error: 'No encontrado' });
 
-    const { name, price, description, category, sizes, tag, coverIndex, existingMedia } = req.body;
+    const { name, price, currency, description, category, sizes, tag, coverIndex, existingMedia } = req.body;
     let gender = req.body.gender;
 
     const updates = {};
     if (name) updates.name = name.substring(0, 32);
     if (price) updates.price = price;
+    if (currency) updates.currency = currency;
     if (description !== undefined) updates.description = description;
     if (category) {
       updates.category = category;

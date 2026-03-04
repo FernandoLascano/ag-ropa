@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AG - Catalogo</title>
+  <link rel="icon" type="image/jpeg" href="/logo-ag.jpeg">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/catalogo.css">
   <style>
@@ -446,7 +447,7 @@
           <div class="catalog-item-body">
             <div class="catalog-item-code">${p.code}</div>
             <div class="catalog-item-name">${esc(p.name)}</div>
-            <div class="catalog-item-price">$${esc(p.price)}</div>
+            <div class="catalog-item-price">${p.currency === 'ARS' ? '$' : 'US$'}${esc(p.price)}</div>
             ${p.description ? `<div class="catalog-item-desc">${esc(p.description)}</div>` : ''}
             ${detailsHtml ? `<ul class="catalog-item-details">${detailsHtml}</ul>` : ''}
             <div class="catalog-item-sizes">${sizesHtml}</div>
@@ -619,7 +620,7 @@
       ].filter(Boolean).map(d => `<span>${d}</span>`).join('');
 
       document.getElementById('lb-info').innerHTML = `
-        <div class="lb-price">$${esc(p.price)}</div>
+        <div class="lb-price">${p.currency === 'ARS' ? '$' : 'US$'}${esc(p.price)}</div>
         ${p.description ? `<div class="lb-desc">${esc(p.description)}</div>` : ''}
         ${details ? `<div class="lb-details">${details}</div>` : ''}
         <div class="lb-sizes">${sizesHtml}</div>
