@@ -1,0 +1,2711 @@
+[
+  {
+    "id": "prod-1771246852577",
+    "code": "AG-001",
+    "name": "Calza",
+    "price": "28",
+    "description": "Calza Nike de entrenamiento en gris jaspeado, de calce ajustado y tejido elástico. Presenta estampa en color coral con la leyenda “RUNNING” y logo Nike a lo largo de una pierna.",
+    "gender": "mujer",
+    "material": "",
+    "color": "gris jaspeado",
+    "fit": "Slim",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771246852548-2amt.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771246852562-rapo.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T13:00:52.578Z",
+    "category": "deportivo"
+  },
+  {
+    "id": "prod-1771247002589",
+    "code": "AG-002",
+    "name": "Calza Fila",
+    "price": "36",
+    "description": "Calza deportiva Fila en color negro, de calce ajustado y tela elástica. Lleva estampa grande del logo “FILA” en blanco con detalle rojo a lo largo de una pierna",
+    "gender": "mujer",
+    "material": "",
+    "color": "Negro",
+    "fit": "Slim",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771247002582-2fge.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771247002583-r5u0.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T13:03:22.589Z",
+    "category": "pantalones"
+  },
+  {
+    "id": "prod-1771247502454",
+    "code": "AG-003",
+    "name": "Calza Under Armour",
+    "price": "28",
+    "description": "Pantalón deportivo Under Armour en azul marino, de corte ajustado y tejido elástico. Presenta cintura con elástico y logo Under Armour en color blanco en la parte superior.",
+    "gender": "mujer",
+    "material": "",
+    "color": "Azul",
+    "fit": "Slim",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771247502452-nc14.jpeg",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T13:11:42.454Z",
+    "category": "pantalones"
+  },
+  {
+    "id": "prod-1771248138038",
+    "code": "AG-004",
+    "name": "Claza",
+    "price": "28",
+    "description": "fgfdggt",
+    "gender": "mujer",
+    "material": "",
+    "color": "Negro",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771248138025-enyx.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T13:22:18.038Z",
+    "category": "pantalones"
+  },
+  {
+    "id": "prod-1771249061512",
+    "code": "AG-005",
+    "name": "Jogger Puma",
+    "price": "40",
+    "description": "Jogger Puma en tono azul grisáceo, de estilo jogger clásico y calce relajado. Cuenta con cintura elastizada con cordón regulable, bolsillos laterales y puños elastizados en los tobillos. Presenta vivo/galón fino en color fucsia a los costados y logo Puma bordado en fucsia en el frente.",
+    "gender": "mujer",
+    "material": "",
+    "color": "azul grisáceo",
+    "fit": "Regular",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771249061487-by5z.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771249061494-ak2k.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T13:37:41.512Z",
+    "category": "pantalones"
+  },
+  {
+    "id": "prod-1771249420704",
+    "code": "AG-006",
+    "name": "Pantalon deportivo Under Armour",
+    "price": "47",
+    "description": "Pantalón deportivo Under Armour en azul marino, de corte slim fit y calce cómodo. Tiene cintura elastizada con cordón regulable, bolsillos laterales y logo Under Armour en blanco en el frente.",
+    "gender": "mujer",
+    "material": "",
+    "color": "azul marino",
+    "fit": "Slim",
+    "sizes": {
+      "S": false,
+      "M": false,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771249420695-vv9q.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771249420702-ibff.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T13:43:40.704Z",
+    "category": "pantalones"
+  },
+  {
+    "id": "prod-1771250101375",
+    "code": "AG-007",
+    "name": "Sweater Banana Republic",
+    "price": "48",
+    "description": "Sweater de punto fino en color crudo, con cuello redondo y terminaciones acanaladas en puños y ruedo. Diseño a rayas horizontales finas en negro y calce relajado, ideal para uso casual.",
+    "gender": "mujer",
+    "material": "",
+    "color": "Crudo/Negro",
+    "fit": "Regular",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771250101360-lewn.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771250101370-9xi7.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T13:55:01.375Z",
+    "category": "abrigos"
+  },
+  {
+    "id": "prod-1771250777701",
+    "code": "AG-008",
+    "name": "Sweater Saint John",
+    "price": "36",
+    "description": "Buzo/Remera en tono verde jaspeado, con cuello redondo y mangas raglán. Presenta calce suelto y largo, con ruedo redondeado, ideal para un look casual y cómodo.",
+    "gender": "mujer",
+    "material": "",
+    "color": "Verdes Jaspeádo",
+    "fit": "Regular",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771250777685-ftih.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771250777692-v9wu.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T14:06:17.701Z",
+    "category": "remeras-camisas"
+  },
+  {
+    "id": "prod-1771251337054",
+    "code": "AG-009",
+    "name": "Sweater JCrew",
+    "price": "40",
+    "description": "Sweater de hilo en gris melange, con cuello redondo y terminaciones acanaladas en puños y ruedo. Presenta aplique central de una manzana roja con efecto brillo/glitter y hoja verde, con calce relajado y estilo casual.",
+    "gender": "mujer",
+    "material": "",
+    "color": "Gris",
+    "fit": "Slim",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "oferta",
+    "media": [
+      {
+        "path": "/uploads/media-1771251337044-ub2o.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771251337049-zfti.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T14:15:37.054Z",
+    "category": "abrigos"
+  },
+  {
+    "id": "prod-1771252662628",
+    "code": "AG-010",
+    "name": "Campera Deportiva Jockey",
+    "price": "46",
+    "description": "Campera deportiva liviana en color rosa viejo, con cierre frontal completo y cuello alto. Presenta mangas raglán, bolsillos laterales y terminación recta, con calce cómodo y estilo minimalista.",
+    "gender": "mujer",
+    "material": "",
+    "color": "Rosa viejo",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771252662591-bcdk.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771252662595-wac0.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771252662599-mb15.mp4",
+        "type": "video",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T14:37:42.628Z",
+    "category": "deportivo"
+  },
+  {
+    "id": "prod-1771256993542",
+    "code": "AG-012",
+    "name": "Remera Spider deportiva",
+    "price": "0",
+    "description": "Remera deportiva manga larga en azul jaspeado, de tejido técnico liviano y elástico. Tiene cuello redondo, mangas raglán y calce al cuerpo con largo a la cadera. Presenta costuras anatómicas y bolsillos laterales integrados, ideal para running o entrenamiento.",
+    "gender": "mujer",
+    "material": "",
+    "color": "azul jaspeádo",
+    "fit": "slim",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771256993502-ocnb.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771256993516-l7p0.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771256993523-utm6.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T15:49:53.543Z",
+    "category": "deportivo"
+  },
+  {
+    "id": "prod-1771257456154",
+    "code": "AG-013",
+    "name": "Buzo Gap",
+    "price": "50",
+    "description": "Buzo oversize en azul marino, de estilo clásico con cuello redondo y terminaciones acanaladas en puños y cintura, con calce suelto y largo, ideal para un look urbano y cómodo.",
+    "gender": "mujer",
+    "material": "",
+    "color": "Azul",
+    "fit": "Oversize",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771257456145-fv4p.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771257456149-c41r.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T15:57:36.154Z",
+    "category": "abrigos"
+  },
+  {
+    "id": "prod-1771257892290",
+    "code": "AG-014",
+    "name": "Pantalón Dryfit Addidas",
+    "price": "46",
+    "description": "Pantalón jogger Adidas en color blanco, de calce cómodo y estilo deportivo. Tiene cintura elastizada con cordón regulable (detalle bicolor), bolsillos laterales y las clásicas tres tiras en tono gris a lo largo de la pierna",
+    "gender": "mujer",
+    "material": "",
+    "color": "blanco",
+    "fit": "Regular",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771257892242-mcks.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771257892257-3j0h.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771257892282-qrjc.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T16:04:52.290Z",
+    "category": "pantalones"
+  },
+  {
+    "id": "prod-1771258246181",
+    "code": "AG-015",
+    "name": "Buzo Michael Kors",
+    "price": "60",
+    "description": "Buzo con capucha Michael Kors en color blanco, de calce relajado y terminaciones acanaladas en puños y cintura. Presenta cordón regulable y estampa frontal grande de patines con detalles en tonos pastel y herrajes dorados, con el monograma “MK” como detalle de marca.",
+    "gender": "mujer",
+    "material": "",
+    "color": "blanco",
+    "fit": "Oversize",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771258246172-ovvt.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771258246177-wmb8.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T16:10:46.181Z",
+    "category": "abrigos"
+  },
+  {
+    "id": "prod-1771262554184",
+    "code": "AG-016",
+    "name": "Cardigan tejido",
+    "price": "48",
+    "description": "Cardigan tejido corto, rosa chicle, con cuello amplio tipo babero, botones grandes brillantes y detalle de corazones negros en franjas (pecho, bajo y puños).",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "Rosa",
+    "fit": "Oversize",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771262569476-536g.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771262569495-12na.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771262569509-xz6v.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T17:22:34.186Z"
+  },
+  {
+    "id": "prod-1771263132352",
+    "code": "AG-017",
+    "name": "Sweater Jockey",
+    "price": "46",
+    "description": "Sweater azul marino, tejido con trama tipo trenzas, cuello polo con escote en V, mangas largas, puños y ruedo acanalados, calce relajado y largo a cadera.",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "azul",
+    "fit": "Regular",
+    "sizes": {
+      "S": false,
+      "M": false,
+      "L": false,
+      "XL": true,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771263132338-k2e1.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771263132344-3bvo.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T17:32:12.352Z"
+  },
+  {
+    "id": "prod-1771263830646",
+    "code": "AG-018",
+    "name": "Cárdigan corto",
+    "price": "42",
+    "description": "Cárdigan corto gris, tejido acanalado, cuello redondo, manga larga y botones frontales al tono.",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "Gris",
+    "fit": "slim",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771263830616-ybfo.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771263830630-sdb5.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771263830638-rry2.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T17:43:50.647Z"
+  },
+  {
+    "id": "prod-1771264123292",
+    "code": "AG-019",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "52",
+    "description": "Tommy Hilfiger verde oliva, tejido trenzado (cable knit), cuello redondo, puños y cintura acanalados",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "Verde Oliva",
+    "fit": "slim",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771264123275-rve0.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771264123280-dkwu.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771264123287-14gs.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T17:48:43.292Z"
+  },
+  {
+    "id": "prod-1771264932228",
+    "code": "AG-020",
+    "name": "Campera de hilo Tommy Hilfiger",
+    "price": "60",
+    "description": "Tejido gris jaspeado tipo cable knit, cierre entero y cuello alto, puños y ruedo acanalados; largo a la cadera. Escudo bordado dorado en el pecho.",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "Gris",
+    "fit": "Regular",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771264932195-xr39.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771264932207-l83r.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771264932216-zoh2.mp4",
+        "type": "video",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T18:02:12.228Z"
+  },
+  {
+    "id": "prod-1771266313925",
+    "code": "AG-021",
+    "name": "Cardigan Theory",
+    "price": "36",
+    "description": "Cardigan tejido azul eléctrico, escote en “V” profundo, cierre frontal con botones (tono oscuro), mangas largas con puño tejido, calce recto",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "azul",
+    "fit": "slim",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "nuevo",
+    "media": [
+      {
+        "path": "/uploads/media-1771266313897-9sh3.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771266313904-fzxa.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771266313914-qql2.mp4",
+        "type": "video",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T18:25:13.925Z"
+  },
+  {
+    "id": "prod-1771266750084",
+    "code": "AG-022",
+    "name": "Sweater Calvin Klein",
+    "price": "58",
+    "description": "Sweater tipo polo de manga larga en tejido color beige/crema liso, con cuello camisero y escote en “V” sin botones.",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "amarillo pastel",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771266750032-rz9x.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771266750042-rgog.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771266750066-s521.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T18:32:30.085Z"
+  },
+  {
+    "id": "prod-1771267619266",
+    "code": "AG-023",
+    "name": "Sweater Banana Republic",
+    "price": "55",
+    "description": "Sweater liviano de punto fino en gris, con cuello redondo y terminaciones acanaladas en cuello, puños y ruedo.",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "Gris",
+    "fit": "Regular",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771267619233-yajp.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771267619250-lx0i.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771267619257-4qp9.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T18:46:59.266Z"
+  },
+  {
+    "id": "prod-1771268104145",
+    "code": "AG-024",
+    "name": "Pantalón",
+    "price": "25",
+    "description": "Pantalón tejido tipo jogger/legging en gris oscuro jaspeado, tiro alto con pretina ancha y cierre frontal con botones. Corte slim hasta el tobillo, con bolsillos laterales y costuras marcadas para un look urbano y cómodo.",
+    "gender": "mujer",
+    "category": "pantalones",
+    "material": "",
+    "color": "gris oscuro jaspeado",
+    "fit": "Regular",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771268104127-bs09.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771268104133-o70h.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771268104139-7p28.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T18:55:04.145Z"
+  },
+  {
+    "id": "prod-1771268481099",
+    "code": "AG-025",
+    "name": "Sweater JCrew",
+    "price": "45",
+    "description": "Buzo liviano color suela, de cuello redondo, con lazo decorativo en el hombro.\r\nCalce relajado y mangas largas: un básico con detalle femenino.",
+    "gender": "mujer",
+    "category": "abrigos",
+    "material": "",
+    "color": "suela",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771268481080-jz35.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771268481085-rxdr.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771268481092-um7g.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T19:01:21.099Z"
+  },
+  {
+    "id": "prod-1771270859887",
+    "code": "AG-027",
+    "name": "Billetera Tommy Hilfiger",
+    "price": "50",
+    "description": "Capacidad para 13 tarjetas",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771270859860-wlc9.mp4",
+        "type": "video",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771270859881-lgq5.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771270859883-lu79.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T19:40:59.887Z"
+  },
+  {
+    "id": "prod-1771270962674",
+    "code": "AG-028",
+    "name": "Bolso Tommy Hilfiger",
+    "price": "0",
+    "description": "- Tela de Lona\r\n- 33 cm de largo x 21 cm.\r\n- Correa ajustable",
+    "gender": "mujer",
+    "category": "accesorio",
+    "material": "",
+    "color": "Azul Marino/Blanco",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771270962651-68m9.mp4",
+        "type": "video",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771270962667-7bdc.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771270962668-7m4l.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771270962670-kvzs.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T19:42:42.674Z"
+  },
+  {
+    "id": "prod-1771271491467",
+    "code": "AG-029",
+    "name": "Stanley Go Bottle 24oz/709ml",
+    "price": "55",
+    "description": "Mantiene 12hs el frío y 40hs hielo y 8hs bebidas calientes - BPA free, tapa con botón pulsador a prueba de fugas. Doble pared de acero inoxidable.",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Celeste",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771271491340-b8e1.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771271491341-j9xo.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771271491344-tur8.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771271491346-ubql.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771271491347-stte.mp4",
+        "type": "video",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T19:51:31.468Z"
+  },
+  {
+    "id": "prod-1771271937938",
+    "code": "AG-030",
+    "name": "Stanlet Quencher protour tumble",
+    "price": "70",
+    "description": "- 30oz/ 887mil\r\n- mantiene de 9 a 11hs bebidas frías, 40hs hielo y 7hs bebidas calientes\r\n- Sorbete integrado con 3 posiciones a prueba de fugas\r\n- BPA free\r\n- Ideal para uso diario, gym, oficina\r\n- Manija ergonómica",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Hueso",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771271937922-ng3b.mp4",
+        "type": "video",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771271937933-d4z1.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771271937934-1hy5.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771271937936-jw4x.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T19:58:57.939Z"
+  },
+  {
+    "id": "prod-1771272164297",
+    "code": "AG-031",
+    "name": "Bandolera Michael Kors",
+    "price": "90",
+    "description": "- Doble cierre  \r\n- Bolsillo para celular\r\n- Distribución interna práctica \r\n- Tela con logotipo estampado\r\n- Resistente a arañazos\r\n- Correa ajustable de cadena y cuero",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771272164276-zitg.mp4",
+        "type": "video",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272164290-xrs0.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272164291-di4g.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272164293-qqm3.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272164295-k8s6.jpeg",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T20:02:44.297Z"
+  },
+  {
+    "id": "prod-1771272845126",
+    "code": "AG-033",
+    "name": "Stanley Flip Straw Tumbler",
+    "price": "40",
+    "description": "- 20 oz/ / 590mi.\r\n- Acero inoxidable - BPA free\r\n- Ideal para llevar en el bolso o el auto\r\n- Mantiene 7hs bebidas frías, 35hs hielo\r\n- Pico rebatible.",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Morado/Naranja",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771272845108-nmmz.mp4",
+        "type": "video",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272845115-kf6t.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771272845116-ownu.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272845116-srae.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272845122-v7ga.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771272845123-y0kv.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T20:14:05.126Z"
+  },
+  {
+    "id": "prod-1771273196668",
+    "code": "AG-034",
+    "name": "Stanley IceFLOW Bottle",
+    "price": "50",
+    "description": "- 24oz/ 720ml\r\n- Mantiene 12hs bebidas frías, de 2 a 5 días hielo, y 8hs bebidas calientes\r\n- Aerolight tecnología, 33% más liviano que las botellas estándar.",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Morado",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771273196648-rz94.mp4",
+        "type": "video",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771273196664-dm6d.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771273196664-u94z.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T20:19:56.668Z"
+  },
+  {
+    "id": "prod-1771273313620",
+    "code": "AG-035",
+    "name": "Bombachas PINK/VictoriaSecret",
+    "price": "8/10",
+    "description": "Bombachas colaless talles M y S.",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Rojo/Blanco",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771273313615-ywbw.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771273313615-w0bd.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771273313617-qn3i.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T20:21:53.620Z"
+  },
+  {
+    "id": "prod-1771273561528",
+    "code": "AG-036",
+    "name": "Bombachas Calvin Klein",
+    "price": "8",
+    "description": "",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771273561524-fsn9.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771273561524-f4y2.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T20:26:01.528Z"
+  },
+  {
+    "id": "prod-1771273781006",
+    "code": "AG-037",
+    "name": "Bombachas PINK/VS/CK",
+    "price": "8/10",
+    "description": "- Cullotte y Colaless\r\n- XS/S/M",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Blanco/Gris",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771273780996-8b34.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771273780998-n7kq.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771273781003-ahl8.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T20:29:41.006Z"
+  },
+  {
+    "id": "prod-1771273872638",
+    "code": "AG-038",
+    "name": "Bombacha Bikini Hans/ H&M",
+    "price": "5/6",
+    "description": "",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771273872628-n68u.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771273872629-w7a2.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T20:31:12.638Z"
+  },
+  {
+    "id": "prod-1771276864089",
+    "code": "AG-039",
+    "name": "Bombacha Tommy H./Forever21",
+    "price": "8/4",
+    "description": "Bombacha Tommy Hilfiger talle S \r\nBombacha Forever21 talle L",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Salmón",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771276864060-dgyt.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771276864077-nib0.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T21:21:04.089Z"
+  },
+  {
+    "id": "prod-1771276921378",
+    "code": "AG-040",
+    "name": "Bombacha de bikini",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "accesorio",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771276921375-6r68.jpeg",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T21:22:01.378Z"
+  },
+  {
+    "id": "prod-1771277018273",
+    "code": "AG-041",
+    "name": "Billetera Tommy Hilfiger",
+    "price": "40",
+    "description": "- Cuero\r\n- RFID Protección\r\n- Capacidad para 6 tarjetas",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "Marrón",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771277018269-t9su.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771277018270-to4c.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T21:23:38.274Z"
+  },
+  {
+    "id": "prod-1771277212473",
+    "code": "AG-042",
+    "name": "Gorras Addidas/Nike",
+    "price": "26/30",
+    "description": "- Gorra Nike, tela Drifil Adv.\r\n- Gorra Addidas, Climecool.",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "negro",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771277212469-ap45.jpeg",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771277212469-bkwx.jpeg",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-16T21:26:52.473Z"
+  },
+  {
+    "id": "prod-1771277266960",
+    "code": "AG-043",
+    "name": "Gorras Tommy/Calvin Klein",
+    "price": "23",
+    "description": "",
+    "gender": "unisex",
+    "category": "accesorio",
+    "material": "",
+    "color": "azul",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771277266957-dqoy.jpeg",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771277266957-u0ke.jpeg",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-16T21:27:46.961Z"
+  },
+  {
+    "id": "prod-1771952287522",
+    "code": "AG-044",
+    "name": "Buzo Abercrombie & Fitch",
+    "price": "66",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "Beige",
+    "fit": "Regular",
+    "sizes": {
+      "S": false,
+      "M": false,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771952287503-1xdi.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771952287513-0s2w.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T16:58:07.523Z"
+  },
+  {
+    "id": "prod-1771952451216",
+    "code": "AG-045",
+    "name": "Buzo Tommy Hilfiger",
+    "price": "80",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "",
+    "fit": "Regular",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771952451205-ey5d.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771952451210-m3u1.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:00:51.216Z"
+  },
+  {
+    "id": "prod-1771952769995",
+    "code": "AG-046",
+    "name": "Buzo Quiksilver",
+    "price": "62",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "azul",
+    "fit": "Regular",
+    "sizes": {
+      "S": false,
+      "M": false,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771952769983-cotp.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771952769989-fp45.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:06:09.995Z"
+  },
+  {
+    "id": "prod-1771952848855",
+    "code": "AG-047",
+    "name": "Buzo Addidas",
+    "price": "62",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "azul",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": false,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771952848847-nd25.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771952848850-a369.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:07:28.856Z"
+  },
+  {
+    "id": "prod-1771952911302",
+    "code": "AG-048",
+    "name": "Buzo Polar Columbia",
+    "price": "47",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "azul",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771952911281-vvrd.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771952911287-i1gq.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:08:31.302Z"
+  },
+  {
+    "id": "prod-1771953186404",
+    "code": "AG-049",
+    "name": "Buzo Holister",
+    "price": "46",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "Rojo",
+    "fit": "Slim",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771953186392-fpvn.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771953186397-sdmh.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:13:06.404Z"
+  },
+  {
+    "id": "prod-1771954103629",
+    "code": "AG-050",
+    "name": "Buzo Polar Columbia",
+    "price": "47",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": false,
+      "L": true,
+      "XL": true,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954103614-4ic1.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954103624-plb8.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:28:23.629Z"
+  },
+  {
+    "id": "prod-1771954149538",
+    "code": "AG-051",
+    "name": "Remera",
+    "price": "30",
+    "description": "",
+    "gender": "hombre",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954149503-35k8.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954149527-64mi.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771954149532-rqvp.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:29:09.538Z"
+  },
+  {
+    "id": "prod-1771954230234",
+    "code": "AG-052",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "40",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "verde",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954230224-o64q.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954230228-3a0q.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:30:30.234Z"
+  },
+  {
+    "id": "prod-1771954340147",
+    "code": "AG-053",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "40",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "Rosa viejo",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954340137-5ayy.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954340141-tcyg.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:32:20.147Z"
+  },
+  {
+    "id": "prod-1771954402389",
+    "code": "AG-054",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "65",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "gris",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954402364-9xff.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954402368-h7y0.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771954402382-38ph.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:33:22.389Z"
+  },
+  {
+    "id": "prod-1771954450979",
+    "code": "AG-055",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "65",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "rojo",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954450965-yv4c.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1771954450969-prq1.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954450974-2ou1.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:34:10.979Z"
+  },
+  {
+    "id": "prod-1771954521428",
+    "code": "AG-056",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "65",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954521418-zzq0.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954521422-jdyb.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:35:21.428Z"
+  },
+  {
+    "id": "prod-1771954615721",
+    "code": "AG-057",
+    "name": "Buzo Aeropostale",
+    "price": "66",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "negro",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954615718-nott.jpeg",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-02-24T17:36:55.721Z"
+  },
+  {
+    "id": "prod-1771954670515",
+    "code": "AG-058",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "40",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1771954670504-6hzv.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1771954670509-whbw.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-02-24T17:37:50.515Z"
+  },
+  {
+    "id": "prod-1772657006815",
+    "code": "AG-059",
+    "name": "Musculosa Calvin Klein",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "amarilla",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657006796-85kk.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-03-04T20:43:26.816Z"
+  },
+  {
+    "id": "prod-1772657096589",
+    "code": "AG-060",
+    "name": "Musculosa fit Gap",
+    "price": "24",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657096577-9om0.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657096582-3he1.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:44:56.589Z"
+  },
+  {
+    "id": "prod-1772657148032",
+    "code": "AG-061",
+    "name": "Calza biker Under Armour",
+    "price": "30",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657148016-6cd7.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657148020-1ute.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1772657148023-oy65.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:45:48.032Z"
+  },
+  {
+    "id": "prod-1772657198716",
+    "code": "AG-062",
+    "name": "Short Nike",
+    "price": "26",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657198690-1ig7.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657198696-gqpx.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1772657198709-h6a1.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:46:38.716Z"
+  },
+  {
+    "id": "prod-1772657257138",
+    "code": "AG-063",
+    "name": "Top Under Armour",
+    "price": "35",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657257108-2top.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657257119-6auj.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:47:37.138Z"
+  },
+  {
+    "id": "prod-1772657302858",
+    "code": "AG-064",
+    "name": "Top Under Armour",
+    "price": "35",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657302843-ywkp.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1772657302849-rfk8.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-03-04T20:48:22.859Z"
+  },
+  {
+    "id": "prod-1772657492813",
+    "code": "AG-065",
+    "name": "Calza Biker Nike",
+    "price": "38",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657492805-y5lr.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657492808-pibz.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:51:32.813Z"
+  },
+  {
+    "id": "prod-1772657920249",
+    "code": "AG-066",
+    "name": "Top Nike",
+    "price": "42",
+    "description": "",
+    "gender": "mujer",
+    "category": "deportivo",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657920238-1v50.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657920243-pta8.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:58:40.249Z"
+  },
+  {
+    "id": "prod-1772657962582",
+    "code": "AG-067",
+    "name": "Remera Rayada Gap",
+    "price": "15",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772657962562-t0nc.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772657962575-s0x0.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T20:59:22.583Z"
+  },
+  {
+    "id": "prod-1772658040312",
+    "code": "AG-068",
+    "name": "Blusa Banana Republic",
+    "price": "37",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658040282-3u1l.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658040294-kyor.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:00:40.312Z"
+  },
+  {
+    "id": "prod-1772658082680",
+    "code": "AG-069",
+    "name": "Blusa Crop Top Zara",
+    "price": "40",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658082654-msy0.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658082662-a8yh.png",
+        "type": "image",
+        "isCover": false
+      },
+      {
+        "path": "/uploads/media-1772658082670-kyjp.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:01:22.680Z"
+  },
+  {
+    "id": "prod-1772658239035",
+    "code": "AG-070",
+    "name": "Camisa mangas cortas Columbia",
+    "price": "30",
+    "description": "Otros Modelos: - Fucsia en talle M/L y en azul/turquesa en talle XL",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658239021-23e9.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658239027-opdz.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:03:59.035Z"
+  },
+  {
+    "id": "prod-1772658363612",
+    "code": "AG-071",
+    "name": "Camisa jean Calvin Klein",
+    "price": "46",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658363603-yc3g.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-03-04T21:06:03.612Z"
+  },
+  {
+    "id": "prod-1772658490434",
+    "code": "AG-072",
+    "name": "Remera Tommy Hilfiger",
+    "price": "24",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658490424-pv1m.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-03-04T21:08:10.434Z"
+  },
+  {
+    "id": "prod-1772658528578",
+    "code": "AG-073",
+    "name": "Remera Hello Kitty",
+    "price": "18",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658528568-zauy.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-03-04T21:08:48.578Z"
+  },
+  {
+    "id": "prod-1772658579278",
+    "code": "AG-074",
+    "name": "Musculosa",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658579261-5xk4.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658579270-tsjo.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:09:39.278Z"
+  },
+  {
+    "id": "prod-1772658605798",
+    "code": "AG-075",
+    "name": "Musculosa",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658605790-zsnb.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658605793-rz25.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:10:05.798Z"
+  },
+  {
+    "id": "prod-1772658629319",
+    "code": "AG-076",
+    "name": "Musculosa",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658629300-0djq.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658629311-i7w1.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:10:29.319Z"
+  },
+  {
+    "id": "prod-1772658667861",
+    "code": "AG-077",
+    "name": "Remera ...",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": false,
+      "M": true,
+      "L": true,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658667847-eppd.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658667851-x5st.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:11:07.861Z"
+  },
+  {
+    "id": "prod-1772658698927",
+    "code": "AG-078",
+    "name": "Musculosa",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658698911-c817.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658698916-b14d.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:11:38.927Z"
+  },
+  {
+    "id": "prod-1772658721461",
+    "code": "AG-079",
+    "name": "Musculosa",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": false,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658721439-pkhk.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658721447-nn9d.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:12:01.461Z"
+  },
+  {
+    "id": "prod-1772658744396",
+    "code": "AG-080",
+    "name": "Musculosa",
+    "price": "0",
+    "description": "",
+    "gender": "mujer",
+    "category": "remeras-camisas",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": false,
+      "XL": false,
+      "XXL": false
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772658744386-2hpm.png",
+        "type": "image",
+        "isCover": true
+      },
+      {
+        "path": "/uploads/media-1772658744391-quuj.png",
+        "type": "image",
+        "isCover": false
+      }
+    ],
+    "createdAt": "2026-03-04T21:12:24.396Z"
+  },
+  {
+    "id": "prod-1772659179168",
+    "code": "AG-081",
+    "name": "Sweater Tommy Hilfiger",
+    "price": "0",
+    "description": "",
+    "gender": "hombre",
+    "category": "abrigos",
+    "material": "",
+    "color": "",
+    "fit": "",
+    "sizes": {
+      "S": true,
+      "M": true,
+      "L": true,
+      "XL": true,
+      "XXL": true
+    },
+    "tag": "",
+    "media": [
+      {
+        "path": "/uploads/media-1772659179160-spuu.png",
+        "type": "image",
+        "isCover": true
+      }
+    ],
+    "createdAt": "2026-03-04T21:19:39.168Z"
+  }
+]
