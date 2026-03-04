@@ -277,12 +277,17 @@ app.get('/admin', ensureAuth, (req, res) => res.sendFile(path.join(__dirname, 'p
 app.get('/catalogo', (req, res) => res.sendFile(path.join(__dirname, 'public', 'catalogo.html')));
 app.get('/catalogo/:gender', (req, res) => res.sendFile(path.join(__dirname, 'public', 'catalogo.html')));
 
-app.listen(PORT, () => {
-  console.log(`\n  AG - ROPA IMPORTADA | Catálogo Digital`);
-  console.log(`  ─────────────────────────────────────`);
-  console.log(`  Portal:     http://localhost:${PORT}`);
-  console.log(`  Admin:      http://localhost:${PORT}/admin`);
-  console.log(`  Catálogo H: http://localhost:${PORT}/catalogo/hombre`);
-  console.log(`  Catálogo M: http://localhost:${PORT}/catalogo/mujer`);
-  console.log(`  ─────────────────────────────────────\n`);
-});
+// Local dev
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n  AG - ROPA IMPORTADA | Catálogo Digital`);
+    console.log(`  ─────────────────────────────────────`);
+    console.log(`  Portal:     http://localhost:${PORT}`);
+    console.log(`  Admin:      http://localhost:${PORT}/admin`);
+    console.log(`  Catálogo H: http://localhost:${PORT}/catalogo/hombre`);
+    console.log(`  Catálogo M: http://localhost:${PORT}/catalogo/mujer`);
+    console.log(`  ─────────────────────────────────────\n`);
+  });
+}
+
+module.exports = app;
