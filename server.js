@@ -87,6 +87,15 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// No cache for API routes (prevents Vercel/browser caching)
+app.use('/api', (req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  res.set('Surrogate-Control', 'no-store');
+  next();
+});
+
 function ensureAuth(req, res, next) {
   if (req.session && req.session.admin) return next();
   if (req.path.startsWith('/api/')) return res.status(401).json({ error: 'No autorizado' });

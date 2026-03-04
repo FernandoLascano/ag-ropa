@@ -530,7 +530,9 @@
     }
 
     async function loadCatalog() {
-      const url = gender ? `/api/products?gender=${gender}` : '/api/products';
+      const base = gender ? `/api/products?gender=${gender}` : '/api/products';
+      const sep = base.includes('?') ? '&' : '?';
+      const url = `${base}${sep}_t=${Date.now()}`;
       const res = await fetch(url);
       catalogProducts = await res.json();
 

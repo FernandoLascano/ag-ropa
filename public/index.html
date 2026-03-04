@@ -34,7 +34,7 @@
   <script>
     async function loadCounts() {
       try {
-        const res = await fetch('/api/products');
+        const res = await fetch(`/api/products?_t=${Date.now()}`);
         const products = await res.json();
         const unisex = products.filter(p => p.gender === 'unisex').length;
         const mujer = products.filter(p => p.gender === 'mujer').length + unisex;
