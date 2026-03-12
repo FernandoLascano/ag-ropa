@@ -152,8 +152,10 @@ app.post('/api/logout', (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
     let query = supabase.from('products').select('*').order('code');
-    if (req.query.gender) {
-      query = query.or(`gender.eq.${req.query.gender},gender.eq.unisex`);
+    if (req.query.gender === 'accesorios') {
+      query = query.eq('gender', 'unisex');
+    } else if (req.query.gender) {
+      query = query.eq('gender', req.query.gender);
     }
     const { data, error } = await query;
     if (error) throw error;

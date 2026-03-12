@@ -329,6 +329,7 @@
       <div class="catalog-gender-tabs">
         <a href="/catalogo/mujer" id="tab-mujer">Mujer</a>
         <a href="/catalogo/hombre" id="tab-hombre">Hombre</a>
+        <a href="/catalogo/accesorios" id="tab-accesorios">Accesorios</a>
       </div>
     </header>
 
@@ -373,6 +374,7 @@
     let gender = null;
     if (urlPath.includes('/mujer')) gender = 'mujer';
     else if (urlPath.includes('/hombre')) gender = 'hombre';
+    else if (urlPath.includes('/accesorios')) gender = 'accesorios';
 
     if (gender === 'mujer') {
       document.getElementById('tab-mujer').classList.add('active');
@@ -382,6 +384,10 @@
       document.getElementById('tab-hombre').classList.add('active');
       document.getElementById('hero-title').textContent = 'Hombre';
       document.title = 'AG - Catalogo Hombre';
+    } else if (gender === 'accesorios') {
+      document.getElementById('tab-accesorios').classList.add('active');
+      document.getElementById('hero-title').textContent = 'Accesorios';
+      document.title = 'AG - Catalogo Accesorios';
     }
 
     let catalogProducts = [];

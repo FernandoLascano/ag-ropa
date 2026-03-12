@@ -22,6 +22,10 @@
         <div class="portal-card-title">Hombre</div>
         <div class="portal-card-count" id="count-hombre">Cargando...</div>
       </a>
+      <a href="/catalogo/accesorios" class="portal-card" id="card-accesorios">
+        <div class="portal-card-title">Accesorios</div>
+        <div class="portal-card-count" id="count-accesorios">Cargando...</div>
+      </a>
     </div>
 
     <div class="portal-footer">
@@ -36,14 +40,16 @@
       try {
         const res = await fetch(`/api/products?_t=${Date.now()}`);
         const products = await res.json();
-        const unisex = products.filter(p => p.gender === 'unisex').length;
-        const mujer = products.filter(p => p.gender === 'mujer').length + unisex;
-        const hombre = products.filter(p => p.gender === 'hombre').length + unisex;
+        const accesorios = products.filter(p => p.gender === 'unisex').length;
+        const mujer = products.filter(p => p.gender === 'mujer').length;
+        const hombre = products.filter(p => p.gender === 'hombre').length;
         document.getElementById('count-mujer').textContent = `${mujer} producto${mujer !== 1 ? 's' : ''}`;
         document.getElementById('count-hombre').textContent = `${hombre} producto${hombre !== 1 ? 's' : ''}`;
+        document.getElementById('count-accesorios').textContent = `${accesorios} producto${accesorios !== 1 ? 's' : ''}`;
       } catch (e) {
         document.getElementById('count-mujer').textContent = '';
         document.getElementById('count-hombre').textContent = '';
+        document.getElementById('count-accesorios').textContent = '';
       }
     }
     loadCounts();
