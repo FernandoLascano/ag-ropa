@@ -503,6 +503,7 @@
               mediaItems.push({
                 path: m.path,
                 type: m.type,
+                publicId: m.publicId,
                 isCover: m.isCover,
                 isExisting: true
               });
@@ -553,39 +554,72 @@
 
       const currency = document.getElementById('form-currency').value;
 
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('price', price);
-      formData.append('currency', currency);
-      formData.append('gender', gender);
-      formData.append('category', category);
-      formData.append('description', document.getElementById('form-desc').value.trim());
-      formData.append('tag', tag);
-      formData.append('sizes', JSON.stringify({
-        S: document.getElementById('size-s').checked,
-        M: document.getElementById('size-m').checked,
-        L: document.getElementById('size-l').checked,
-        XL: document.getElementById('size-xl').checked,
-        XXL: document.getElementById('size-xxl').checked
-      }));
-
       const existing = mediaItems.filter(m => m.isExisting).map(m => ({
-        path: m.path, type: m.type, isCover: false
+        path: m.path, type: m.type, publicId: m.publicId, isCover: false
       }));
-      formData.append('existingMedia', JSON.stringify(existing));
 
+      // Upload new files directly to Cloudinary from browser
       const newFiles = mediaItems.filter(m => !m.isExisting);
-      for (const item of newFiles) {
-        formData.append('media', item.file);
+      let uploadedMedia = [];
+      if (newFiles.length > 0) {
+        showToast('Subiendo archivos...', '');
+        try {
+          const sigRes = await fetch('/api/cloudinary-signature');
+          if (sigRes.status === 401) { window.location.href = '/login'; return; }
+          const sig = await sigRes.json();
+
+          uploadedMedia = await Promise.all(newFiles.map(async (item) => {
+            const fd = new FormData();
+            fd.append('file', item.file);
+            fd.append('api_key', sig.api_key);
+            fd.append('timestamp', sig.timestamp);
+            fd.append('signature', sig.signature);
+            fd.append('folder', sig.folder);
+            const ext = item.file.name.split('.').pop().toLowerCase();
+            const isVideo = ['mp4','mov','webm'].includes(ext);
+            const resourceType = isVideo ? 'video' : 'image';
+            const uploadUrl = `https://api.cloudinary.com/v1_1/${sig.cloud_name}/${resourceType}/upload`;
+            const upRes = await fetch(uploadUrl, { method: 'POST', body: fd });
+            const result = await upRes.json();
+            if (result.error) throw new Error(result.error.message);
+            return { url: result.secure_url, publicId: result.public_id, type: resourceType };
+          }));
+        } catch (e) {
+          showToast('Error subiendo archivos: ' + e.message, 'error');
+          return;
+        }
       }
 
-      formData.append('coverIndex', String(coverIdx));
+      const body = {
+        name, price, currency, gender, category,
+        description: document.getElementById('form-desc').value.trim(),
+        tag,
+        sizes: {
+          S: document.getElementById('size-s').checked,
+          M: document.getElementById('size-m').checked,
+          L: document.getElementById('size-l').checked,
+          XL: document.getElementById('size-xl').checked,
+          XXL: document.getElementById('size-xxl').checked
+        },
+        existingMedia: existing,
+        uploadedMedia,
+        coverIndex: String(coverIdx)
+      };
 
       try {
         const url = editingId ? `/api/products/${editingId}` : '/api/products';
         const method = editingId ? 'PUT' : 'POST';
-        const res = await fetch(url, { method, body: formData });
-        if (!res.ok) throw new Error((await res.json()).error || 'Error');
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) {
+          let errMsg = 'Error';
+          try { errMsg = (await res.json()).error || errMsg; } catch { errMsg = await res.text(); }
+          if (res.status === 401) { window.location.href = '/login'; return; }
+          throw new Error(errMsg);
+        }
 
         closeModal();
         showToast(editingId ? 'Producto actualizado' : 'Producto creado', 'success');
@@ -601,7 +635,12 @@
       if (!confirm(`Eliminar "${name}"? Esta accion no se puede deshacer.`)) return;
       try {
         const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
-        if (!res.ok) throw new Error('Error');
+        if (res.status === 401) { window.location.href = '/login'; return; }
+        if (!res.ok) {
+          let errMsg = 'Error';
+          try { errMsg = (await res.json()).error || errMsg; } catch { errMsg = await res.text(); }
+          throw new Error(errMsg);
+        }
         showToast('Producto eliminado', 'success');
         await fetchProducts();
       } catch (e) { showToast(e.message, 'error'); }

@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const multer = require('multer');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
@@ -34,37 +33,6 @@ async function generateCode() {
     .filter(n => !isNaN(n));
   const next = nums.length > 0 ? Math.max(...nums) + 1 : 1;
   return `${prefix}-${String(next).padStart(3, '0')}`;
-}
-
-// --- Multer (memory storage for Cloudinary) ---
-const fileFilter = (req, file, cb) => {
-  const allowed = ['.jpg', '.jpeg', '.png', '.webp', '.mp4', '.mov', '.webm'];
-  const ext = path.extname(file.originalname).toLowerCase();
-  cb(null, allowed.includes(ext));
-};
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-  fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 }
-});
-
-// Upload buffer to Cloudinary
-function uploadToCloudinary(file) {
-  return new Promise((resolve, reject) => {
-    const ext = path.extname(file.originalname).toLowerCase();
-    const isVideo = ['.mp4', '.mov', '.webm'].includes(ext);
-    const resourceType = isVideo ? 'video' : 'image';
-
-    const stream = cloudinary.uploader.upload_stream(
-      { folder: 'ag-catalogo', resource_type: resourceType },
-      (error, result) => {
-        if (error) return reject(error);
-        resolve({ url: result.secure_url, publicId: result.public_id, type: resourceType });
-      }
-    );
-    stream.end(file.buffer);
-  });
 }
 
 // Delete from Cloudinary
@@ -148,6 +116,23 @@ app.post('/api/logout', (req, res) => {
 
 // --- API ---
 
+// Cloudinary signature for direct browser uploads
+app.get('/api/cloudinary-signature', ensureAuth, (req, res) => {
+  const timestamp = Math.round(Date.now() / 1000);
+  const folder = 'ag-catalogo';
+  const signature = cloudinary.utils.api_sign_request(
+    { timestamp, folder },
+    process.env.CLOUDINARY_API_SECRET
+  );
+  res.json({
+    signature,
+    timestamp,
+    folder,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY
+  });
+});
+
 // GET all products
 app.get('/api/products', async (req, res) => {
   try {
@@ -181,10 +166,10 @@ app.get('/api/products/:id', async (req, res) => {
   }
 });
 
-// POST create product
-app.post('/api/products', ensureAuth, upload.array('media', 15), async (req, res) => {
+// POST create product (media already uploaded to Cloudinary from browser)
+app.post('/api/products', ensureAuth, async (req, res) => {
   try {
-    const { name, price, currency, description, category, sizes, tag, coverIndex } = req.body;
+    const { name, price, currency, description, category, sizes, tag, coverIndex, uploadedMedia } = req.body;
     let gender = req.body.gender;
 
     if (!name || !price) {
@@ -198,10 +183,8 @@ app.post('/api/products', ensureAuth, upload.array('media', 15), async (req, res
     }
 
     const coverIdx = parseInt(coverIndex) || 0;
-
-    // Upload files to Cloudinary
-    const uploads = await Promise.all((req.files || []).map(f => uploadToCloudinary(f)));
-    const media = uploads.map((u, i) => ({
+    const parsed = uploadedMedia || [];
+    const media = parsed.map((u, i) => ({
       path: u.url,
       publicId: u.publicId,
       type: u.type,
@@ -237,8 +220,8 @@ app.post('/api/products', ensureAuth, upload.array('media', 15), async (req, res
   }
 });
 
-// PUT update product
-app.put('/api/products/:id', ensureAuth, upload.array('media', 15), async (req, res) => {
+// PUT update product (media already uploaded to Cloudinary from browser)
+app.put('/api/products/:id', ensureAuth, async (req, res) => {
   try {
     // Get current product
     const { data: current, error: fetchErr } = await supabase
@@ -248,7 +231,7 @@ app.put('/api/products/:id', ensureAuth, upload.array('media', 15), async (req, 
       .single();
     if (fetchErr || !current) return res.status(404).json({ error: 'No encontrado' });
 
-    const { name, price, currency, description, category, sizes, tag, coverIndex, existingMedia } = req.body;
+    const { name, price, currency, description, category, sizes, tag, coverIndex, existingMedia, uploadedMedia } = req.body;
     let gender = req.body.gender;
 
     const updates = {};
@@ -284,9 +267,8 @@ app.put('/api/products/:id', ensureAuth, upload.array('media', 15), async (req, 
       }
     }
 
-    // Upload new files to Cloudinary
-    const uploadResults = await Promise.all((req.files || []).map(f => uploadToCloudinary(f)));
-    const newMedia = uploadResults.map(u => ({
+    // New media already uploaded to Cloudinary from browser
+    const newMedia = (uploadedMedia || []).map(u => ({
       path: u.url, publicId: u.publicId, type: u.type, isCover: false
     }));
 
