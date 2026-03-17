@@ -138,9 +138,9 @@ app.get('/api/products', async (req, res) => {
   try {
     let query = supabase.from('products').select('*').order('code');
     if (req.query.gender === 'accesorios') {
-      query = query.eq('gender', 'unisex');
+      query = query.eq('category', 'accesorio');
     } else if (req.query.gender) {
-      query = query.eq('gender', req.query.gender);
+      query = query.eq('gender', req.query.gender).neq('category', 'accesorio');
     }
     const { data, error } = await query;
     if (error) throw error;
