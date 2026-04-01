@@ -199,6 +199,7 @@
               <option value="abrigos">Abrigos</option>
               <option value="pantalones">Pantalones</option>
               <option value="ropa-interior">Ropa Interior</option>
+              <option value="vestidos">Vestidos</option>
               <option value="accesorio">Accesorios</option>
             </select>
           </div>
@@ -320,7 +321,7 @@
     }
 
     function tagLabel(t) { return {nuevo:'Nuevo',oferta:'Oferta',ultimos:'Ultimos talles'}[t] || ''; }
-    function catLabel(c) { return {deportivo:'Deportivo','remeras-camisas':'Remeras/Camisas',abrigos:'Abrigos',pantalones:'Pantalones','ropa-interior':'Ropa Interior',accesorio:'Accesorios'}[c] || 'Sin categoria'; }
+    function catLabel(c) { return {deportivo:'Deportivo','remeras-camisas':'Remeras/Camisas',abrigos:'Abrigos',pantalones:'Pantalones','ropa-interior':'Ropa Interior',vestidos:'Vestidos',accesorio:'Accesorios'}[c] || 'Sin categoria'; }
 
     function genderLabel(g) {
       if (g === 'unisex') return 'Unisex';
