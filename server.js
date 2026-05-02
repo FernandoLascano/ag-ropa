@@ -4,12 +4,14 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const cloudinary = require('cloudinary').v2;
 const { createClient } = require('@supabase/supabase-js');
+const multer = require('multer');
+const sharp = require('sharp');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// --- Cloudinary ---
+// --- Cloudinary (legacy — kept for deletion of pre-migration assets) ---
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -21,6 +23,39 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
+
+// Service-role client (server-only) for Storage writes/deletes
+const supabaseAdmin = process.env.SUPABASE_SERVICE_ROLE_KEY
+  ? createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false }
+    })
+  : null;
+
+const STORAGE_BUCKET = 'media';
+
+// In-memory uploads (Vercel serverless: keep small; browser pre-resizes images)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 50 * 1024 * 1024 }
+});
+
+async function deleteFromStorage(storagePath) {
+  if (!supabaseAdmin || !storagePath) return;
+  const { error } = await supabaseAdmin.storage.from(STORAGE_BUCKET).remove([storagePath]);
+  if (error) console.warn('Storage delete failed:', storagePath, error.message);
+}
+
+async function deleteMediaItem(m) {
+  if (m.storagePath) {
+    await deleteFromStorage(m.storagePath);
+  } else if (m.publicId) {
+    try {
+      await deleteFromCloudinary(m.publicId, m.type === 'video' ? 'video' : 'image');
+    } catch (e) {
+      console.warn('Cloudinary delete failed:', m.publicId, e.message);
+    }
+  }
+}
 
 async function generateCode() {
   const prefix = 'AG';
@@ -75,6 +110,7 @@ function parseCookie(req, name) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // No cache for API routes (prevents Vercel/browser caching)
 app.use('/api', (req, res, next) => {
@@ -116,21 +152,55 @@ app.post('/api/logout', (req, res) => {
 
 // --- API ---
 
-// Cloudinary signature for direct browser uploads
-app.get('/api/cloudinary-signature', ensureAuth, (req, res) => {
-  const timestamp = Math.round(Date.now() / 1000);
-  const folder = 'ag-catalogo';
-  const signature = cloudinary.utils.api_sign_request(
-    { timestamp, folder },
-    process.env.CLOUDINARY_API_SECRET
-  );
-  res.json({
-    signature,
-    timestamp,
-    folder,
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY
-  });
+// Upload media: optimize image with sharp, then push to Supabase Storage
+app.post('/api/upload-media', ensureAuth, upload.single('file'), async (req, res) => {
+  try {
+    if (!supabaseAdmin) {
+      return res.status(500).json({ error: 'Falta SUPABASE_SERVICE_ROLE_KEY en el servidor' });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se recibió archivo' });
+    }
+
+    const isVideo = (req.file.mimetype || '').startsWith('video/');
+    let buffer = req.file.buffer;
+    let ext, contentType;
+
+    if (isVideo) {
+      const mt = req.file.mimetype || 'video/mp4';
+      ext = (mt.split('/')[1] || 'mp4').replace('quicktime', 'mov');
+      contentType = mt;
+    } else {
+      const img = sharp(buffer, { animated: false }).rotate();
+      const meta = await img.metadata();
+      let pipeline = img;
+      if (meta.width && meta.width > 1200) {
+        pipeline = pipeline.resize({ width: 1200, withoutEnlargement: true });
+      }
+      buffer = await pipeline.jpeg({ quality: 82, mozjpeg: true }).toBuffer();
+      ext = 'jpg';
+      contentType = 'image/jpeg';
+    }
+
+    const filename = `${Date.now()}-${crypto.randomBytes(4).toString('hex')}.${ext}`;
+    const storagePath = `products/${filename}`;
+
+    const { error: upErr } = await supabaseAdmin.storage
+      .from(STORAGE_BUCKET)
+      .upload(storagePath, buffer, { contentType, upsert: false });
+    if (upErr) throw upErr;
+
+    const { data: pub } = supabaseAdmin.storage.from(STORAGE_BUCKET).getPublicUrl(storagePath);
+
+    res.json({
+      url: pub.publicUrl,
+      storagePath,
+      type: isVideo ? 'video' : 'image'
+    });
+  } catch (err) {
+    console.error('Error uploading media:', err);
+    res.status(500).json({ error: err.message || 'Error subiendo archivo' });
+  }
 });
 
 // GET all products
@@ -186,7 +256,7 @@ app.post('/api/products', ensureAuth, async (req, res) => {
     const parsed = uploadedMedia || [];
     const media = parsed.map((u, i) => ({
       path: u.url,
-      publicId: u.publicId,
+      storagePath: u.storagePath,
       type: u.type,
       isCover: i === coverIdx
     }));
@@ -259,17 +329,17 @@ app.put('/api/products/:id', ensureAuth, async (req, res) => {
       kept = Array.isArray(parsed) ? parsed : [];
     }
 
-    // Delete removed files from Cloudinary
+    // Delete removed files (handles both Supabase Storage and legacy Cloudinary)
     const keptPaths = new Set(kept.map(m => m.path));
     for (const old of (current.media || [])) {
-      if (!keptPaths.has(old.path) && old.publicId) {
-        await deleteFromCloudinary(old.publicId, old.type === 'video' ? 'video' : 'image');
+      if (!keptPaths.has(old.path)) {
+        await deleteMediaItem(old);
       }
     }
 
-    // New media already uploaded to Cloudinary from browser
+    // New media already uploaded to Supabase Storage from /api/upload-media
     const newMedia = (uploadedMedia || []).map(u => ({
-      path: u.url, publicId: u.publicId, type: u.type, isCover: false
+      path: u.url, storagePath: u.storagePath, type: u.type, isCover: false
     }));
 
     const allMedia = [...kept, ...newMedia];
@@ -304,11 +374,9 @@ app.delete('/api/products/:id', ensureAuth, async (req, res) => {
       .single();
     if (fetchErr || !product) return res.status(404).json({ error: 'No encontrado' });
 
-    // Delete media from Cloudinary
+    // Delete media (handles both Supabase Storage and legacy Cloudinary)
     for (const m of (product.media || [])) {
-      if (m.publicId) {
-        await deleteFromCloudinary(m.publicId, m.type === 'video' ? 'video' : 'image');
-      }
+      await deleteMediaItem(m);
     }
 
     const { error } = await supabase.from('products').delete().eq('id', req.params.id);

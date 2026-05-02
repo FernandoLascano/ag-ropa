@@ -434,6 +434,36 @@
       renderMediaPreview();
     }
 
+    // Browser-side resize so we never hit Vercel's 4.5 MB body limit
+    function resizeImageInBrowser(file, maxWidth) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+        img.onload = () => {
+          try {
+            const w = img.naturalWidth, h = img.naturalHeight;
+            const scale = Math.min(1, maxWidth / w);
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(w * scale);
+            canvas.height = Math.round(h * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(blob => {
+              URL.revokeObjectURL(objectUrl);
+              if (!blob) return reject(new Error('No se pudo procesar la imagen'));
+              const name = file.name.replace(/\.[^.]+$/, '') + '.jpg';
+              resolve(new File([blob], name, { type: 'image/jpeg' }));
+            }, 'image/jpeg', 0.92);
+          } catch (e) {
+            URL.revokeObjectURL(objectUrl);
+            reject(e);
+          }
+        };
+        img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('Imagen inválida')); };
+        img.src = objectUrl;
+      });
+    }
+
     document.getElementById('form-media').addEventListener('change', function(e) {
       for (const file of e.target.files) {
         const ext = file.name.split('.').pop().toLowerCase();
@@ -504,6 +534,7 @@
               mediaItems.push({
                 path: m.path,
                 type: m.type,
+                storagePath: m.storagePath,
                 publicId: m.publicId,
                 isCover: m.isCover,
                 isExisting: true
@@ -556,35 +587,32 @@
       const currency = document.getElementById('form-currency').value;
 
       const existing = mediaItems.filter(m => m.isExisting).map(m => ({
-        path: m.path, type: m.type, publicId: m.publicId, isCover: false
+        path: m.path, type: m.type, storagePath: m.storagePath, publicId: m.publicId, isCover: false
       }));
 
-      // Upload new files directly to Cloudinary from browser
+      // Upload new files via backend (sharp-optimized, then Supabase Storage)
       const newFiles = mediaItems.filter(m => !m.isExisting);
       let uploadedMedia = [];
       if (newFiles.length > 0) {
         showToast('Subiendo archivos...', '');
         try {
-          const sigRes = await fetch('/api/cloudinary-signature');
-          if (sigRes.status === 401) { window.location.href = '/login'; return; }
-          const sig = await sigRes.json();
-
-          uploadedMedia = await Promise.all(newFiles.map(async (item) => {
+          uploadedMedia = [];
+          for (const item of newFiles) {
+            let toUpload = item.file;
+            if (item.type === 'image') {
+              toUpload = await resizeImageInBrowser(item.file, 1600);
+            }
             const fd = new FormData();
-            fd.append('file', item.file);
-            fd.append('api_key', sig.api_key);
-            fd.append('timestamp', sig.timestamp);
-            fd.append('signature', sig.signature);
-            fd.append('folder', sig.folder);
-            const ext = item.file.name.split('.').pop().toLowerCase();
-            const isVideo = ['mp4','mov','webm'].includes(ext);
-            const resourceType = isVideo ? 'video' : 'image';
-            const uploadUrl = `https://api.cloudinary.com/v1_1/${sig.cloud_name}/${resourceType}/upload`;
-            const upRes = await fetch(uploadUrl, { method: 'POST', body: fd });
-            const result = await upRes.json();
-            if (result.error) throw new Error(result.error.message);
-            return { url: result.secure_url, publicId: result.public_id, type: resourceType };
-          }));
+            fd.append('file', toUpload);
+            const upRes = await fetch('/api/upload-media', { method: 'POST', body: fd });
+            if (upRes.status === 401) { window.location.href = '/login'; return; }
+            if (!upRes.ok) {
+              let msg = 'Upload failed';
+              try { msg = (await upRes.json()).error || msg; } catch {}
+              throw new Error(msg);
+            }
+            uploadedMedia.push(await upRes.json()); // { url, storagePath, type }
+          }
         } catch (e) {
           showToast('Error subiendo archivos: ' + e.message, 'error');
           return;
